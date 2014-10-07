@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+  <display-name>A simple page template web application using PrimeFaces and Spring</display-name>
+  <context-param>
+    <param-name>primefaces.THEME</param-name>
+    <param-value>black-tie</param-value>
+  </context-param>
+  <context-param>
+    <param-name>javax.faces.PROJECT_STAGE</param-name>
+    <param-value>Development</param-value>
+  </context-param>
+  <context-param>
+    <param-name>javax.faces.CONFIG_FILES</param-name>
+    <param-value>/WEB-INF/faces-config.xml</param-value>
+  </context-param>
+  <context-param>
+    <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+    <param-value>.xhtml</param-value>
+  </context-param>
+  
+ <listener>
+    <listener-class>org.wsbn.servlets.EmfServlet</listener-class>
+</listener>
+  
+  
+  <servlet>
+    <servlet-name>Faces Servlet</servlet-name>
+    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>*.xhtml</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>*.jsf</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>*.faces</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>
+    <welcome-file>index.jsf</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>EMF</display-name>
+    <servlet-name>EMF</servlet-name>
+    <servlet-class>org.wsbn.servlets.EMF</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EMF</servlet-name>
+    <url-pattern>/EMF</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EmfServlet</display-name>
+    <servlet-name>EmfServlet</servlet-name>
+    <servlet-class>org.wsbn.servlets.EmfServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EmfServlet</servlet-name>
+    <url-pattern>/EmfServlet</url-pattern>
+  </servlet-mapping>
+</web-app>

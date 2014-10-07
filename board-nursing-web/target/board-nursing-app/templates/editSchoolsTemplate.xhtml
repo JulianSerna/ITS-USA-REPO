@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<f:view contentType="text/html" id="fview">
+
+
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>BOARD OF NURSING</title>
+		<ui:debug />
+	</h:head>
+
+	<h:body onload="statusDialog.hide();">
+
+		<p:layout fullPage="true" resizeTitle="resize"
+			style="background-color:#FFFFFF;">
+
+			<p:layoutUnit position="north" size="15%" id="north">
+				<ui:include src="header.xhtml" />
+			</p:layoutUnit>
+
+			<p:layoutUnit styleClass="layoutUnitCenter" position="center"
+				size="75%">
+				<ui:include src="menuBar.xhtml" />
+
+
+
+
+
+				<!-- ADD SCHOOLS -->
+
+				<h:form id="form">
+				
+					
+					<f:event type="preRenderView" listener="#{schoolController.updateLists}" />
+					
+					<p:growl id="msgs" showDetail="true" />
+					<p:panelGrid columns="1">
+
+
+						<p:contextMenu for="shcoolsTable" widgetVar="cMenu">
+							<p:menuitem value="Delete Row" icon="ui-icon-close"
+								onclick="schoolController.deleteRow" />
+						</p:contextMenu>
+
+
+						<h:panelGroup style="width:60%; align:top;">
+							<p:panel header="List of Nursing Schools" style="width: 100%;">
+
+								<p:dataTable value="#{schoolController.schoolDtoList}"
+									var="oDto" style="width:100%;" editable="true"
+									id="shcoolsTable" scrollable="true" scrollHeight="90%"
+									selection="#{schoolController.selectedDto}"
+									rowKey="#{oDto.rid}">
+
+									<p:column style="width:16px;text-align:center"
+										selectionMode="single" />
+
+									<p:ajax event="rowEdit" listener="#{schoolController.onEdit}"
+										update=":form:msgs" />
+									<p:ajax event="rowEditCancel"
+										listener="#{schoolController.onCancel}" update=":form:msgs" />
+
+
+									<p:column width="5%">
+										<f:facet name="header">
+											<h:outputText value="RID" />
+										</f:facet>
+
+										<h:outputText value="#{oDto.rid}" />
+
+									</p:column>
+
+									<p:column width="40%">
+										<f:facet name="header">
+											<h:outputText value="NAME" />
+										</f:facet>
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{oDto.name}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{oDto.name}"  />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+
+
+
+									<p:column width="30%">
+										<f:facet name="header">
+											<h:outputText value="PROGRAMS" />
+										</f:facet>
+
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="PROGRAMS" id="programsList" />
+											</f:facet>
+											<f:facet name="input">
+												<p:selectCheckboxMenu id="programs" value="#{oDto.programs}"   panelStyle="width:250px">
+													<f:selectItems value="#{schoolController.allProgramDtoList}" 
+														var="oProgramDto" itemLabel="#{oProgramDto.name}" itemValue="#{oProgramDto.rid}" />
+												</p:selectCheckboxMenu>
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+
+
+									<p:column width="10%">
+										<f:facet name="header">
+											<h:outputText value="DISABLED" />
+										</f:facet>
+
+
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{oDto.disabled}" id="disabled" />
+											</f:facet>
+											<f:facet name="input">
+												<h:selectOneMenu value="#{oDto.disabled}">
+													<f:selectItems value="#{schoolController.disabledList}"
+														var="oDis" itemLabel="#{oDis}" itemValue="#{oDis}" />
+												</h:selectOneMenu>
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									
+									
+									
+
+
+									<p:column headerText="Options" width="15%">
+										<p:rowEditor />
+									</p:column>
+								</p:dataTable>
+
+								<f:facet name="footer">
+									<p:panel header="List of Nursing Schools" style="width: 100%;">
+
+
+
+										<h:outputLabel for="name" value="Name: " />
+										<p:inputText value="#{schoolController.newSchoolDto.name}"
+											id="name" />
+
+										<h:outputLabel for="disabled" value="DISABLED:" />
+										<h:selectOneMenu
+											value="#{schoolController.newSchoolDto.disabled}">
+											<f:selectItems value="#{schoolController.disabledList}"
+												var="oDis" itemLabel="#{oDis}" itemValue="#{oDis}" />
+										</h:selectOneMenu>
+
+
+
+										<h:outputLabel for="programs" value="PROGRAMS:" />
+										<p:selectCheckboxMenu id="newPrograms"
+											value="#{schoolController.newSchoolDto.programs}"
+											label="PROGRAMS" filter="false" panelStyle="width:250px">
+											<f:selectItems value="#{schoolController.allProgramDtoList}"
+												var="programDto" itemLabel="#{programDto.name}" itemValue="#{programDto.rid}" />
+										</p:selectCheckboxMenu>
+
+
+
+
+										<h:commandButton value="Add Item"
+											action="#{schoolController.addAction}" />
+
+									</p:panel>
+
+
+								</f:facet>
+
+							</p:panel>
+						</h:panelGroup>
+
+					</p:panelGrid>
+
+
+
+
+
+
+
+
+
+				</h:form>
+
+				<!-- END EDITABLE TABLE -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			</p:layoutUnit>
+
+			<p:layoutUnit position="east" size="0"
+				style="width:0px; display:none;" id="east">
+			</p:layoutUnit>
+
+			<p:layoutUnit position="south" resizable="true" id="south" size="10%">
+				<ui:include src="footer.xhtml" />
+			</p:layoutUnit>
+
+		</p:layout>
+
+		<p:dialog modal="true" widgetVar="statusDialog" showHeader="false"
+			draggable="false" closable="false" resizable="false" visible="false"
+			position="center" maximizable="false" minimizable="false">
+			<p:graphicImage value="#{resource['images/ajax-loader.gif']}" />
+		</p:dialog>
+
+
+
+
+
+	</h:body>
+
+</f:view>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

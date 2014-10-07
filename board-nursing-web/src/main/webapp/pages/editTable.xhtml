@@ -1,0 +1,93 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/templates/template.xhtml">
+
+
+	<ui:define name="metadata">
+
+	</ui:define>
+
+
+	<ui:define name="content">
+
+		<h:form id="form">
+			<p:growl id="msgs" showDetail="true" />
+
+
+			<p:dataTable var="car" value="#{tableBean.carsSmall}" id="carList"
+				editable="true" rowKey="#{car.model}" style="margin-bottom:20px"
+				selectionMode="single" selection="#{tableBean.selectedCar}"
+				scrollable="true" scrollHeight="90%">
+
+
+				<p:ajax event="rowEdit" listener="#{tableBean.onRowEdit}"
+					update=":form:msgs" />
+				<p:ajax event="rowEditCancel"
+					listener="#{tableBean.onRowCancel}" update=":form:msgs" />
+
+				<f:facet name="header">
+            	Cars Editing
+        		</f:facet>
+
+				
+
+
+
+
+				<p:column headerText="Model" style="width:150px">
+					<h:outputText value="#{car.model}" id="modelInput" />
+
+				</p:column>
+
+				<p:column headerText="Year" style="width:150px">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{car.year}"  />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText  value="#{car.year}" style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Manufacturer" style="width:150px">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{car.manufacturer}" id="carManufacturer" />
+						</f:facet>
+						<f:facet name="input">
+							<h:selectOneMenu value="#{car.manufacturer}">
+								<f:selectItems value="#{tableBean.manufacturers}" var="man"
+									itemLabel="#{man}" itemValue="#{man}" />
+							</h:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Color" style="width:150px">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{car.color}" id="carColor" />
+						</f:facet>
+						<f:facet name="input">
+							<h:selectOneMenu value="#{car.color}">
+								<f:selectItems value="#{tableBean.colors}" var="color"
+									itemLabel="#{color}" itemValue="#{color}" />
+							</h:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Options" style="width:5%">
+					<p:rowEditor />
+				</p:column>
+
+			</p:dataTable>
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>

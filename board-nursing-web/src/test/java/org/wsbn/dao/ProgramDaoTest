@@ -1,0 +1,54 @@
+package pl.mjedynak;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import pl.mjedynak.model.Person;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.core.Is.is;
+import static pl.mjedynak.model.PersonBuilder.aPerson;
+
+public class ProgarmDaoTest
+{
+
+    private PersonDao personDao;
+    private EntityManagerFactory entityManagerFactory;
+    private EntityManager entityManager;
+
+    @Before
+    public void setUp()
+     {
+        entityManagerFactory = Persistence.createEntityManagerFactory("jpa-one");
+        entityManager = entityManagerFactory.createEntityManager();
+        ProgramDao = new ProgramDao(entityManager);
+
+    }
+
+    @After
+    public void tearDown() {
+        entityManager.close();
+        entityManagerFactory.close();
+    }
+
+    @Test
+    public void shouldFindPreviouslySavedPerson() {
+        // given
+        ProgramDto oDto = new ProgramDto();
+        oDto.setValue("TEST PROGRAM");
+        oDto.setDisabled(false);
+        ProgramDao.createEntity(oDto);
+
+        // when
+        ProgramDto result = oDao.find(oDto);
+        assertNotNull(result);
+        
+
+    }
+}

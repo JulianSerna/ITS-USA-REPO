@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14111348083350" configfile="/board-nursing-web/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="pages/login.xhtml" x="122" y="370" id="pf14113446286410" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf14113446286411 pf14113446286412" path="/pages/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="338" y="178" id="pf14113446286413" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14113446286411" path="/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/login.jsf" x="338" y="562" id="pf14113446286414" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf14113446286412" path="/pages/login.jsf"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="946" id="pf14113446286415" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf14113446286416" path="/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/managePrograms.jsf" x="338" y="946" id="pf14113446286417" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf14113446286416" path="/pages/managePrograms.jsf"/>
+  <links id="pf14113446286411" target="pf14113446286413" source="pf14113446286410" outcome="SUCCESS" fromaction="#{userController.login}"/>
+  <links id="pf14113446286412" target="pf14113446286414" source="pf14113446286410" outcome="FAILED" fromaction="#{userController.login}"/>
+  <links id="pf14113446286416" target="pf14113446286417" source="pf14113446286415" outcome="SUCCESS" fromaction="#{programController.findAll}"/>
+</pageflow:Pageflow>

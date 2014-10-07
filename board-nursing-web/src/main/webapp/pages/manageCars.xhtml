@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/template.xhtml">
+
+
+
+
+	<ui:define name="metadata">
+
+	</ui:define>
+
+
+	<ui:define name="content">
+
+
+		<h:form prependId="false">
+
+			<p:dataTable rowKey="#{car.rid}" var="car" value="#{carController.cars}" paginator="true"
+				rows="10" selection="#{carController.selectedCar}">
+
+				<f:facet name="header">  
+            		RadioButton Based Selection  
+        		</f:facet>
+
+				<p:column selectionMode="single" />
+
+				<p:column headerText="Model">
+					<h:outputText value="#{car.model}" />
+				</p:column>
+
+				<p:column headerText="Year">
+					<h:outputText value="#{car.year}" />
+				</p:column>
+
+				<p:column headerText="Manufacturer">
+					<h:outputText value="#{car.manufacturer}" />
+				</p:column>
+
+				<p:column headerText="Color">
+					<h:outputText value="#{car.color}" />
+				</p:column>
+
+
+			</p:dataTable>
+
+			
+
+		</h:form>
+
+
+
+
+
+	</ui:define>
+
+
+
+</ui:composition>
