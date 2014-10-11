@@ -36,12 +36,12 @@
 	</properties>
 
 	<build>
-		<finalName>board-nursing-app</finalName>
+		<finalName>board-nursing-web</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.0</version>
+				<version>3.1</version>
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
@@ -75,6 +75,7 @@
 			<groupId>com.microsoft.sqlserver</groupId>
 			<artifactId>sqljdbc4</artifactId>
 			<version>4.0</version>
+
 		</dependency>
 
 		<dependency>
@@ -108,11 +109,12 @@
 
 
 
-
+		<!-- JSF -->
 		<dependency>
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-api</artifactId>
 			<version>2.2.5</version>
+			 
 		</dependency>
 
 
@@ -120,17 +122,26 @@
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-impl</artifactId>
 			<version>2.2.5</version>
+		 
 		</dependency>
 
-
+		<!-- PRIME FACES -->
 		<dependency>
 			<groupId>org.primefaces.themes</groupId>
 			<artifactId>all-themes</artifactId>
 			<version>1.0.10</version>
 		</dependency>
 
+		
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>${primafaces.version}</version>
+			<scope>provided</scope>
+		</dependency>
 
-
+		
+		
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
@@ -142,19 +153,6 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.0.1</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.primefaces</groupId>
-			<artifactId>primefaces</artifactId>
-			<version>${primafaces.version}</version>
-		</dependency>
-
-
-
-
-
-
-
 
 
 	</dependencies>

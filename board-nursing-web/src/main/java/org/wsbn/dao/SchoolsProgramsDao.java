@@ -23,6 +23,11 @@ public class SchoolsProgramsDao implements Serializable
 
 	// COLLABORATORS
 	
+	// STATE
+	
+	// lists
+	
+	
 
 	// CONSTRUCTOR(S)
 	public SchoolsProgramsDao() {
@@ -59,9 +64,12 @@ public class SchoolsProgramsDao implements Serializable
 		return oResponse;
 
 	}
-	public void saveEntity(SchoolDto pScholDto)
+	public void updateSchoolRids(SchoolDto pSchoolDto)
 	{
 
+		// validate procedure
+		if(pSchoolDto.getRid() == null) return;
+		
 		// get entity manager
 		EntityManager oEm = PersistenceManager.createEntityManager();
 
@@ -73,15 +81,19 @@ public class SchoolsProgramsDao implements Serializable
 			oTrans.begin();
 			
 			// delete all the school program dtos for the school in question ...
-			this. deleteSchoolPrograms(pScholDto);
+			this.deleteSchoolPrograms(pSchoolDto);
 			
-			// for each school program rid
-			for(Long programRid : pScholDto.getProgramRids())
+			// if the school dto has school-program dtos ...
+			if(pSchoolDto.getProgramRids() != null)
 			{
-				// add the SchoolProgramDto entity to the database ....
-				SchoolProgramDto newDto = new SchoolProgramDto(pScholDto.getRid(), programRid);
-				oEm.persist(newDto);
-				
+				// for each school-program dto ...
+				for(String programRid : pSchoolDto.getProgramRids())
+				{
+					// add the SchoolProgramDto entity to the database ....
+					SchoolProgramDto newDto = new SchoolProgramDto(pSchoolDto.getRid(), Long.parseLong(programRid));
+					oEm.persist(newDto);
+					
+				}
 			}
 									
 			oTrans.commit();
@@ -164,6 +176,7 @@ public class SchoolsProgramsDao implements Serializable
 	 * SchoolDto
 	 */
 	
+	@SuppressWarnings("unchecked")
 	public synchronized List<SchoolProgramDto> findSchoolProgramDtoList(SchoolDto pDto)
 	{
 		// get entity manager
@@ -173,7 +186,8 @@ public class SchoolsProgramsDao implements Serializable
 
 		try {
 
-			Query query = oEm.createQuery("SELECT e FROM SchoolProgramDto e WHERE e.schoolRid = " + pDto.getRid() + "");
+			Query query = oEm.createQuery("SELECT e FROM SchoolProgramDto e WHERE e.schoolRid = :schoolRid");
+			query.setParameter("schoolRid", pDto.getRid());
 			oResponse = query.getResultList();
 
 		}
@@ -190,21 +204,32 @@ public class SchoolsProgramsDao implements Serializable
 
 	}
 	
-	public synchronized void deleteSchoolPrograms(SchoolDto pDto)
+	public synchronized int deleteSchoolPrograms(SchoolDto pDto)
 	{
 		// get entity manager
 		EntityManager oEm = PersistenceManager.createEntityManager();
+		
+		EntityTransaction oTrans = null;
+		
+		int iCount = 0;
 
 		
 
-		try {
-
-			Query query = oEm.createQuery("DELETE e FROM SchoolProgramDto e WHERE e.schoolRid = " + pDto.getRid() + "");
-			query.getResultList();
-
+		try 
+		{
+			
+			oTrans = oEm.getTransaction();
+			oTrans.begin();
+			
+			Query query = oEm.createQuery("DELETE FROM SchoolProgramDto e WHERE e.schoolRid = :scholRid");
+			query.setParameter("scholRid", pDto.getRid());
+			iCount = query.executeUpdate();
+			oTrans.commit();
+			
 		}
-		catch (Exception e) {
-
+		catch (Exception e) 
+		{
+			oTrans.rollback();
 		}
 
 		finally {
@@ -212,7 +237,7 @@ public class SchoolsProgramsDao implements Serializable
 			
 		}
 
-	
+		return iCount;
 
 	}
 
@@ -226,8 +251,11 @@ public class SchoolsProgramsDao implements Serializable
 		Object oResponse = null;
 
 		try {
-			//TODO:JULS:implement this ...
-			//oResponse = oEm.find(pDto.getClass(), pDto.getRid());
+			String sSql = "SELECT e FROM SchoolProgramDto e WHERE e.schoolRid = :schoolRid AND e.programRid = :programRid";
+			Query query = oEm.createQuery(sSql);
+			query.setParameter("schoolRid", pDto.getSchoolRid());
+			query.setParameter("programRid", pDto.getProgramRid());
+			oResponse = query.getResultList();
 
 		}
 		catch (Exception e) {
@@ -243,6 +271,7 @@ public class SchoolsProgramsDao implements Serializable
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public synchronized List<SchoolProgramDto> findAll()
 	{
 
@@ -254,7 +283,7 @@ public class SchoolsProgramsDao implements Serializable
 		try {
 
 			Query query = oEm.createQuery("SELECT e FROM SchoolProgramDto e");
-			oResponse = query.getResultList();
+			oResponse =  query.getResultList();
 
 		}
 		catch (Exception e) {

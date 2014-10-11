@@ -8,7 +8,9 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.RowEditEvent;
@@ -22,91 +24,115 @@ import org.wsbn.dto.SchoolDto;
 import org.wsbn.dto.SchoolProgramDto;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class SchoolController implements Serializable
 {
 
 	private static final long	serialVersionUID	= 1L;
-
+	
 	// COLLABORATORS
+	
+	// IoC
 	@ManagedProperty(value="#{schoolService}")
 	private SchoolService schoolService;
  
-	
-	private SchoolsProgramsDao	mSchoolsProgramsDao	= new SchoolsProgramsDao();
-	private ProgramsDao			mProgramsDao		= new ProgramsDao();
-
 	// STATE
+	private SchoolDto mNewSchoolDto;
+	private SchoolDto mSelectedSchoolDto;
+	private boolean bInit = false;
+		
 
 	// lists
 	private List<Boolean>		mDisabledList		= buildDisabledList();
-
-	private List<SchoolDto>		mAllSchoolsList		= null;
-	private List<ProgramDto>	mAllProgramsList	= null;
-
-	// selections
-	private SchoolDto			mSelectedSchool		= null;
-	private SchoolDto			mNewSchoolDto		= null;
-	private List<ProgramDto>	mSelectedPrograms	= null;
-	// private List<Object> mSelectedProgramIds;
-
-	// CONSTRUCTOR(S)
-	public SchoolController() {
-		super();
-		// dao(s)
-
-	}
-    
+	private List<SchoolDto> mAllSchoolsList;
+	private List<ProgramDto> mAllProgramsList;
+	//private List<SchoolProgramDto> mAllSchoolProgramList;
+   
 	// IoC
-	//must povide the setter method
+	//must provide the setter method
 	public void setSchoolService(SchoolService pSchoolService) 
 	{
+		
 		this.schoolService = pSchoolService;
 	}
 	
 	
 	// GUI CALLS
-	public void updateLists()
+	public void init()
 	{
+		// try to prevent this method from being called twice ...
+		if(bInit == true) return;
 
-		mAllSchoolsList = this.schoolService.loadFullSchoolDtoList();
-		this.mSchoolsProgramsDao.findAll();
-
-		if (this.mAllProgramsList == null) 
+		// set flag
+		bInit = true;
+		
+		try
 		{
-			this.mAllProgramsList = this.mProgramsDao.findAll();
+			
+			this.mAllSchoolsList = null;
+			this.mAllProgramsList = null;
+			
+			this.mAllSchoolsList = this.schoolService.getAllSchoolsList();
+			this.mAllProgramsList = this.schoolService.getAllProgramsList();
 		}
+		catch(Exception e)
+		{
+			bInit = false;
+		}
+		
+		
 	}
 
 	// GETTER/SETTERS
+	
+	public void setSelectedSchool(SchoolDto pDto)
+	{
+		this.mSelectedSchoolDto = pDto;
+	}
+	public SchoolDto getSelectedSchool()
+	{
+		return this.mSelectedSchoolDto;	
+	}
+	
+		
 	private List<Boolean> buildDisabledList()
 	{
-		// hard-coded
-		this.mDisabledList = new ArrayList<Boolean>(2);
-		this.mDisabledList.add(true);
-		this.mDisabledList.add(false);
+		if(this.mDisabledList == null)
+		{
+			
+			// hard-coded
+			this.mDisabledList = new ArrayList<Boolean>(2);
+			this.mDisabledList.add(true);
+			this.mDisabledList.add(false);
+		
+		}
 
 		return mDisabledList;
 	}
-
-	public List<ProgramDto> getAllProgramDtoList()
+	
+	public void onRowSelect(SelectEvent event) 
 	{
-		if (this.mAllProgramsList == null) {
-			return new ArrayList<ProgramDto>();
-		}
-
+        this.setSelectedSchool(  ((SchoolDto) event.getObject()));
+		
+    }
+ 
+	
+    public void onRowUnselect(UnselectEvent event) 
+    {
+    	
+    	this.mSelectedSchoolDto = null;
+    
+    }
+	
+	
+	
+	public List<ProgramDto> getAllProgramsDtoList()
+	{
 		return this.mAllProgramsList;
 
 	}
-	public List<Long> getSelectedPrograms()
-	{
-		if (this.mSelectedSchool == null) 
-		{
-			return new ArrayList<Long>();
-		}
-		
-		return this.mSelectedSchool.getProgramRids();
-	}
+	
+	
 
 	public List<Boolean> getDisabledList()
 	{
@@ -120,68 +146,35 @@ public class SchoolController implements Serializable
 
 	public SchoolDto getNewSchoolDto()
 	{
-		if (this.mNewSchoolDto == null) {
-			this.mNewSchoolDto = new SchoolDto();
-		}
-
-		return mNewSchoolDto;
-	}
-
-	public void setSelectedSchool(SchoolDto pDto)
-	{
-		this.mSelectedSchool = pDto;
-	}
-	public SchoolDto getSelectedDto()
-	{
-		if (this.mSelectedSchool == null) {
-			return new SchoolDto();
-		}
-		return mSelectedSchool;
-	}
-	public void setSelectedDto(SchoolDto pDto)
-	{
-		this.mSelectedSchool = pDto;
+		
+		if(this.mNewSchoolDto  == null)  this.mNewSchoolDto = new SchoolDto();
+		return this.mNewSchoolDto;
+		
 	}
 	
-	public List<SchoolDto> getSchoolDtoList()
+	
+	public List<SchoolDto> getAllSchoolsDtoList()
 	{
 		return this.mAllSchoolsList;
 		
 	}
-
 	
-	// METHODS
-	public void deleteRow()
-	{
-
-		this.schoolService.deleteFullSchoolDto(mSelectedSchool);
-		
-		this.mAllSchoolsList = this.schoolService.loadFullSchoolDtoList();
-	}
+	
 
 	public void addAction()
 	{
 		// add school dto
-		this.schoolService.saveFullSchoolDto(this.mNewSchoolDto);
+		this.schoolService.addFullSchoolDto(this.mNewSchoolDto);
 		
-		// load all schools
-		this.mAllSchoolsList = this.schoolService.loadFullSchoolDtoList();
+		
+		
 
 		
 	}
-
-	public void onRowSelect(SelectEvent event)
+	public void deleteAction()
 	{
-		FacesMessage msg = new FacesMessage("Row Selected", ((SchoolDto) event.getObject()).getRid().toString());
-		this.mSelectedSchool = (SchoolDto) event.getObject();
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
-
-	public void onRowUnselect(UnselectEvent event)
-	{
-		this.mSelectedSchool = null;
-		FacesMessage msg = new FacesMessage("Row Unselected", ((SchoolDto) event.getObject()).getRid().toString());
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		this.deleteSchool();
+		
 	}
 
 	public synchronized void onEdit(RowEditEvent event)
@@ -194,6 +187,10 @@ public class SchoolController implements Serializable
 
 			// save school and selected school programs
 			this.schoolService.saveFullSchoolDto(oEditDto);
+			
+			// reload schools list
+			this.bInit = false;
+			this.init();
 			
 			FacesMessage msg = new FacesMessage("Edit Successful ...", ((SchoolDto) event.getObject()).getRid()
 					.toString());
@@ -215,45 +212,25 @@ public class SchoolController implements Serializable
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 
 	}
-
-	/**
-	 * This method gets a list of all the ProgramDtos in the database and
-	 * converts them to a SchooProgramDto list
-	 * 
-	 * @param pSchoolDto
-	 *            The SchoolDto used to get all the only the Programs for a
-	 *            particular School
-	 * @return
-	 */
-	private void addRemoveSchoolPrograms(SchoolDto pSchoolDto)
+	
+	public void deleteSchool() 
 	{
-
-		// validate arguments
-		if (pSchoolDto == null) {
-			return;
-		}
-
-		// remove all the school programs from database
+        // method validation
+		if(this.mSelectedSchoolDto == null) return;
+		this.schoolService.deleteFullSchoolDto(this.mSelectedSchoolDto);
+		this.mAllSchoolsList.remove(this.mSelectedSchoolDto); // test, see if this can be deleted
+		this.mSelectedSchoolDto = null;
+		this.refreshLists();
 		
-
-		
-		// validate user has selected some programs
-		if (pSchoolDto != null ) 
-		{
-			try {
-				// update the selected program rids
-				this.schoolService.saveFullSchoolDto(pSchoolDto);
-				
-				// update the schools list
-				this.mAllSchoolsList = this.schoolService.loadFullSchoolDtoList();
-				
-
-			}
-			catch (Exception e) {
-				System.out.println(e.toString());
-			}
-		}
-
+    }
+	
+	public void refreshLists()
+	{
+		this.bInit = false;
+		this.init();
 	}
+
+	
+	
 
 }

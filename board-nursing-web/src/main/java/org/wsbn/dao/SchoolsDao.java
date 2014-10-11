@@ -64,35 +64,38 @@ public class SchoolsDao implements Serializable
 	
 	}
 	
-	public synchronized void deleteEntity(SchoolDto oDto)
+	public synchronized int deleteEntity(SchoolDto oDto)
 	{
 		
 		// get entity manager
+		int iCount = 0;
 		EntityManager oEm = PersistenceManager.createEntityManager(); 
-		
 		EntityTransaction oTrans = null;
 		
-		
-		try
+
+		try 
 		{
+			
 			oTrans = oEm.getTransaction();
 			oTrans.begin();
-			oEm.remove(oDto);
 			
-		
-		oTrans.commit();
+			Query query = oEm.createQuery("DELETE FROM SchoolDto e WHERE e.rid = :scholRid");
+			query.setParameter("scholRid", oDto.getRid());
+			iCount = query.executeUpdate();
+			oTrans.commit();
+			
 		}
-		catch(Exception e)
+		catch (Exception e) 
 		{
 			oTrans.rollback();
 		}
-		
-		
-		finally
-		{
+
+		finally {
 			oEm.close();
+			
 		}
-		
+
+		return iCount;
 		
 	}
 	

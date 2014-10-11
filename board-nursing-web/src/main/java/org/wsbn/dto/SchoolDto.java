@@ -2,6 +2,7 @@ package org.wsbn.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
 
 
 
@@ -28,8 +30,9 @@ public class SchoolDto implements Serializable
 	// STATE
 	
 	@Transient
-	private List<Long> programRids;
-	
+	private String[] programRids;
+	//private List<SchoolProgramDto> schoolProgramDtoList;
+		
 	@Id
 	@GeneratedValue
 	@Column(name = "RID")
@@ -57,20 +60,32 @@ public class SchoolDto implements Serializable
 	}
 
 	// SETTERS/GETTERS
-	public List<Long> getProgramRids()
-	{
-		if(this.programRids == null)
-		{
-			this.programRids = new ArrayList<Long>();
-		}
-		
-		return this.programRids;
-	}
-	public void setProgramsRids(List<Long> pProgramRids)
-	{
+	/*
+	public void setProgramRids(List<Long> pProgramRids) {
 		this.programRids = pProgramRids;
 	}
+	
+	public List<Long> getProgramRids()
+	{
+		return this.programRids;
+	}
+	*/
+	
+	/*
+	public void setSchoolProgramDtoList(List<SchoolProgramDto> pDtoList) {
+		this.schoolProgramDtoList = pDtoList;
+	}
+	
+	public List<SchoolProgramDto> getSchoolProgramDtoList()
+	{
+		return this.schoolProgramDtoList;
+	}
+	*/
+	
+	
+	
 		
+			
 	public Long getRid()
 	{
 		return rid;
@@ -88,43 +103,8 @@ public class SchoolDto implements Serializable
 		this.name = pName;
 	}
 	
-	public void addProgramRid(Long pProgramRid)
-	{
-		if (programRids == null)
-		{
-			this.programRids = new ArrayList<Long>();
-		}
-		if(!this.programRids.contains(pProgramRid))
-		{
-			this.programRids.add(pProgramRid);
-		}
-			
-	}
-	
-	public void removeProgram(String pProgramRid)
-	{
-		// method validation
-		if (this.programRids == null)
-		{
-			return;
-		}
 		
-				
-		if(this.programRids.contains(pProgramRid))
-		{
-			this.programRids.remove(pProgramRid);
-		}
-			
-	}
 	
-	public void removeAllPrograms()
-	{
-		this.programRids = new ArrayList<Long>();
-		
-	}
-	/**
-	 * @return the disabled
-	 */
 	public Boolean getDisabled()
 	{
 		return disabled;
@@ -135,6 +115,43 @@ public class SchoolDto implements Serializable
 	public void setDisabled(Boolean disabled)
 	{
 		this.disabled = disabled;
+	}
+	
+	public String[] getProgramRids()
+	{
+		return this.programRids;
+	}
+	public void setProgramRids(String[] pIds)
+	{
+		this.programRids = pIds;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((rid == null) ? 0 : rid.hashCode());
+		return result;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
+		SchoolDto other = (SchoolDto) obj;
+		if (rid == null) {
+			if (other.rid != null) return false;
+		}
+		else
+			if (!rid.equals(other.rid)) return false;
+		return true;
 	}
 	
 	

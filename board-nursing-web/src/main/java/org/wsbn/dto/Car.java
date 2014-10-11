@@ -1,0 +1,165 @@
+package org.wsbn.dto;
+
+/*
+ * Copyright 2009 Prime Technology.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+import java.io.Serializable;
+
+public class Car implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+	
+	public String id;
+	public String brand;
+	public String model;
+	public int year;
+	public String manufacturer;
+	private String[] colors;
+    public int price;
+    public boolean sold;
+
+    public Car()
+    {
+    	
+    }
+    
+    /**
+	 * @return the id
+	 */
+	public String getId()
+	{
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id)
+	{
+		this.id = id;
+	}
+
+	public Car(String model, int year, String manufacturer, String[] color) {
+		this.model = model;
+		this.year = year;
+		this.manufacturer = manufacturer;
+		this.colors = color;
+	}
+	
+	
+		/**
+	 * @return the brand
+	 */
+	public String getBrand()
+	{
+		return brand;
+	}
+
+	/**
+	 * @param brand the brand to set
+	 */
+	public void setBrand(String brand)
+	{
+		this.brand = brand;
+	}
+
+		public Car(String id, String brand, int year, String[] colors,  int price, boolean sold) {
+		
+		this.id = id;
+		this.brand = brand;
+		this.year = year;
+		this.colors = colors;
+        this.price = price;
+        this.sold = sold;
+	}
+
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+	public String getManufacturer() {
+		return manufacturer;
+	}
+
+	public void setManufacturer(String manufacturer) {
+		this.manufacturer = manufacturer;
+	}
+
+	public String[] getColors() {
+		return colors;
+	}
+
+	public void setColor(String[] colors) {
+		this.colors = colors;
+	}
+
+     public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public boolean isSold() {
+        return sold;
+    }
+
+    public void setSold(boolean sold) {
+        this.sold = sold;
+    }
+    
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null)
+			return false;
+		
+		if(!(obj instanceof Car))
+			return false;
+		
+		Car compare = (Car) obj;
+	
+		return compare.id.equals(this.id);
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 1;
+		
+	    return hash * 31 + model.hashCode();
+	}
+
+    @Override
+    public String toString() {
+        return "Car{" + "model=" + model + ", year=" + year + ", manufacturer=" + manufacturer + ", color=" + colors + ", price=" + price + '}';
+    }
+}
