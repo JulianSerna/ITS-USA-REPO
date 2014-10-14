@@ -1,0 +1,83 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>BOARD OF NURSING</title>
+
+</h:head>
+
+<h:body>
+
+	<p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
+
+		<p:layoutUnit position="north" size="15%" id="north">
+			<ui:include src="/templates/header.xhtml" />
+		</p:layoutUnit>
+
+
+
+		<p:layoutUnit styleClass="layoutUnitCenter" position="center" size="85%">
+			<ui:include src="/templates/menuBar.xhtml" />
+
+
+			<!-- FORM -->
+			<h:form id="stateNursingProgramsAndSchools">
+
+
+				<!-- INIT THE CONTROLLER -->
+				<f:event type="preRenderView" listener="#{programSchoolsReportController.init}" />
+
+				<!-- LAYOUT -->
+				<p:panelGrid columns="1">
+
+					<!-- SUB LAYOUT -->
+					<h:panelGroup style="width:60%; align:top;">
+
+						<!-- PANEL -->
+						<p:panel style="width: 100%;">
+
+							<p:dataTable id="programReportTable" value="#{programSchoolsReportController.allProgramsVoList}" var="oDto" rowKey="#{oDto.programRid}" editable="false"
+								selectionMode="single" scrollable="true" scrollHeight="90%" style="width:100%;" draggableRows="false">
+
+								<f:facet name="header">  
+									WYOMING NURSING PROGRAMS REPORT
+								</f:facet>
+
+
+								<!--  SUB TABLE -->
+								<p:subTable var="oSchoolVo" value="#{oDto.schoolVoList}">
+
+									<f:facet name="header">
+										<h:outputText value="#{oDto.programName}" />
+									</f:facet>
+
+									<p:column>
+										<h:outputText value="#{oSchoolVo.name}" />
+									</p:column>
+
+
+
+								</p:subTable>
+
+
+
+
+							</p:dataTable>
+						</p:panel>
+					</h:panelGroup>
+				</p:panelGrid>
+
+			</h:form>
+
+
+		</p:layoutUnit>
+	</p:layout>
+
+
+</h:body>
+
+
+</html>

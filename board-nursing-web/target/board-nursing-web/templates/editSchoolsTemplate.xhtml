@@ -1,5 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
@@ -28,7 +26,7 @@
 			</p:layoutUnit>
 
 			<p:layoutUnit styleClass="layoutUnitCenter" position="center"
-				size="75%">
+				size="60%">
 				<ui:include src="menuBar.xhtml" />
 
 				<!-- LIST OF SCHOOLS -->
@@ -50,9 +48,9 @@
 
 
 						<h:panelGroup style="width:60%; align:top;">
-							<p:panel header="List of Nursing Schools" style="width: 100%;">
+							<p:panel  style="width: 100%;">
 
-									
+								<!-- TABLE -->
 								<p:dataTable id="schoolsTable" var="oSchoolDto" value="#{schoolController.allSchoolsDtoList}"  selection="#{schoolController.selectedSchool}" 
 									editable="true" style="margin-bottom:20px" scrollable="true" scrollHeight="90%"   rowKey="#{oSchoolDto.rid}"  selectionMode="single"	>
 									
@@ -71,13 +69,9 @@
 										listener="#{schoolController.onCancel}" update=":form:msgs" />
 
 
-									<p:column width="5%">
-										<f:facet name="header">
-											<h:outputText value="RID" />
-										</f:facet>
-
-										<h:outputText value="#{oSchoolDto.rid}" />
-
+									
+									<p:column headerText="RID" width="5%">
+										<h:outputText value="#{oDto.rid}" />
 									</p:column>
 
 									<p:column width="40%">
@@ -135,7 +129,7 @@
 									</p:column>
 									
 
-									<p:column headerText="Options" width="15%">
+									<p:column headerText="EDIT" width="7%">
 										<p:rowEditor />
 									</p:column>
 																		
@@ -144,39 +138,7 @@
 
 
 								<!-- ADD FORM TODO:JULS:move this to the East panel -->
-								<f:facet name="footer">
-									<p:panel header="List of Nursing Schools" style="width: 100%;">
-
-
-
-										<h:outputLabel for="name" value="Name: " />
-										<p:inputText value="#{schoolController.newSchoolDto.name}" id="name" />
-
-										<h:outputLabel for="disabled" value="DISABLED:" />
-										<h:selectOneMenu id="disabled"
-											value="#{schoolController.newSchoolDto.disabled}">
-											<f:selectItems value="#{schoolController.disabledList}"
-												var="oDis" itemLabel="#{oDis}" itemValue="#{oDis}" />
-										</h:selectOneMenu>
-
-
-
-										<h:outputLabel for="newPrograms" value="PROGRAMS:" />
-										<p:selectCheckboxMenu id="newPrograms" 
-											value="#{schoolController.newSchoolDto.programRids}"
-											label="PROGRAMS" filter="false" panelStyle="width:250px">
-											<f:selectItems value="#{schoolController.allProgramsDtoList}"
-												var="programDto" itemLabel="#{programDto.name}" itemValue="#{programDto.rid}" />
-										</p:selectCheckboxMenu>
-
-										<h:commandButton value="Add Item"
-											action="#{schoolController.addAction}" />
-
-									</p:panel>
-
-
-								</f:facet>
-
+								
 							</p:panel>
 						</h:panelGroup>
 
@@ -198,12 +160,8 @@
 
 			</p:layoutUnit>
 
-			<p:layoutUnit position="east" size="0"
-				style="width:0px; display:none;" id="east">
-			</p:layoutUnit>
-
-			<p:layoutUnit position="south" resizable="true" id="south" size="10%">
-				<ui:include src="footer.xhtml" />
+			<p:layoutUnit position="south" resizable="true" id="south" size="20%">
+				<ui:include src="/pages/editSchoolsFooter.xhtml" />
 			</p:layoutUnit>
 
 		</p:layout>

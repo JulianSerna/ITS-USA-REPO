@@ -42,6 +42,12 @@ public class ProgramsDao implements Serializable
 		
 		try
 		{
+			
+			// aut set next print index
+			Query q = oEm.createQuery( "SELECT COUNT(e.rid) FROM ProgramDto e" );
+			int count = ( (Integer) q.getSingleResult() ).intValue();
+			oDto.setPrintIndex(count);
+			
 			oTrans = oEm.getTransaction();
 			oTrans.begin();
 			oEm.persist(oDto);	
@@ -185,13 +191,13 @@ public class ProgramsDao implements Serializable
 		try
 		{
 			
-			Query query = oEm.createQuery("SELECT e FROM ProgramDto e");
-			oResponse =  query.getResultList();			 	
+			Query query = oEm.createQuery("SELECT e FROM ProgramDto e ORDER BY e.printIndex, e.name ");
+			oResponse = query.getResultList();			 	
 			
 		}
 		catch(Exception e)
 		{
-			
+			System.out.println(e);
 		}
 		
 		

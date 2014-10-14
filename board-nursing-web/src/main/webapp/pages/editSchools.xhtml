@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<f:view contentType="text/html" id="fview">
+
+
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>BOARD OF NURSING</title>
+		<ui:debug />
+	</h:head>
+
+	<h:body onload="statusDialog.hide();">
+
+		<p:layout fullPage="true" resizeTitle="resize"
+			style="background-color:#FFFFFF;">
+
+			<p:layoutUnit position="north" size="15%" id="north">
+				<ui:include src="/templates/header.xhtml" />
+			</p:layoutUnit>
+
+			<p:layoutUnit styleClass="layoutUnitCenter" position="center"
+				size="60%">
+				<ui:include src="menuBar.xhtml" />
+
+				<!-- LIST OF SCHOOLS -->
+
+				<h:form id="form">
+				
+					<p:growl id="msgs" showDetail="true" />
+				
+					<p:contextMenu for="schoolsTable" >
+				        <p:menuitem value="Delete" update="schoolsTable" icon="ui-icon-close" action="#{schoolController.deleteSchool}" />
+				    </p:contextMenu>
+				
+					
+					<f:event type="preRenderView" listener="#{schoolController.init}" />
+					
+					
+					<p:panelGrid columns="1">
+
+
+
+						<h:panelGroup style="width:60%; align:top;">
+							<p:panel  style="width: 100%;">
+
+								<!-- TABLE -->
+								<p:dataTable id="schoolsTable" var="oSchoolDto" value="#{schoolController.allSchoolsDtoList}"  selection="#{schoolController.selectedSchool}" 
+									editable="true" style="margin-bottom:20px" scrollable="true" scrollHeight="90%"   rowKey="#{oSchoolDto.rid}"  selectionMode="single"	>
+									
+									
+									<f:facet name="header">
+					           			EDIT SCHOOLS
+					       			</f:facet>
+
+									<p:ajax event="rowSelect" listener="#{schoolController.onRowSelect}"  />
+        							<p:ajax event="rowUnselect" listener="#{schoolControll.onRowUnselect}" />
+													
+									
+									<p:ajax event="rowEdit" listener="#{schoolController.onEdit}"
+										update=":form:msgs" />
+									<p:ajax event="rowEditCancel"
+										listener="#{schoolController.onCancel}" update=":form:msgs" />
+
+									<!-- COLUMNS -->
+									<p:column width="5%">
+										<f:facet name="header">
+											<h:outputText value="RID" />
+										</f:facet>
+
+										<h:outputText value="#{oSchoolDto.rid}" />
+
+									</p:column>
+
+									<p:column width="40%">
+										<f:facet name="header">
+											<h:outputText value="NAME" />
+										</f:facet>
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{oSchoolDto.name}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{oSchoolDto.name}"  />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+										
+									
+									<!--  SELECTED PROGRAMS -->
+									<p:column headerText="PROGRAMS">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="Programs" />
+											</f:facet>
+											
+											<f:facet name="input">
+												<p:selectCheckboxMenu value="#{oSchoolDto.programRids}" style="width:100%" >
+													<f:selectItems value="#{schoolController.allProgramsDtoList}" filter="false"
+														var="programDto" itemLabel="#{programDto.name}" itemValue="#{programDto.rid}" />
+														<p:ajax event="change" value="#{schoolDto.programRids}"/>
+												</p:selectCheckboxMenu>
+											</f:facet>
+											
+										</p:cellEditor>
+									</p:column>
+									
+
+
+									<p:column width="10%">
+										<f:facet name="header">
+											<h:outputText value="DISABLED" />
+										</f:facet>
+
+
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{oSchoolDto.disabled}" id="disabled" />
+											</f:facet>
+											<f:facet name="input">
+												<h:selectOneMenu value="#{oSchoolDto.disabled}">
+													<f:selectItems value="#{schoolController.disabledList}"
+														var="oDis" itemLabel="#{oDis}" itemValue="#{oDis}" />
+												</h:selectOneMenu>
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									
+
+									<p:column headerText="EDIT" width="7%">
+										<p:rowEditor />
+									</p:column>
+																		
+									
+								</p:dataTable>
+
+
+								<!-- ADD FORM TODO:JULS:move this to the East panel -->
+								
+							</p:panel>
+						</h:panelGroup>
+
+					</p:panelGrid>
+
+
+
+
+
+
+
+
+
+				</h:form>
+
+				<!-- END EDITABLE TABLE -->
+
+
+
+			</p:layoutUnit>
+
+			<p:layoutUnit position="south" resizable="true" id="south" size="20%">
+				<ui:include src="/pages/editSchoolsFooter.xhtml" />
+			</p:layoutUnit>
+
+		</p:layout>
+
+		<p:dialog modal="true" widgetVar="statusDialog" showHeader="false"
+			draggable="false" closable="false" resizable="false" visible="false"
+			position="center" maximizable="false" minimizable="false">
+			<p:graphicImage value="#{resource['images/ajax-loader.gif']}" />
+		</p:dialog>
+
+
+
+
+
+	</h:body>
+
+</f:view>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

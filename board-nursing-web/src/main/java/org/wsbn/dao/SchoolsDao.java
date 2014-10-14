@@ -176,13 +176,13 @@ public class SchoolsDao implements Serializable
 		try
 		{
 			
-			Query query = oEm.createQuery("SELECT e FROM SchoolDto e");
+			Query query = oEm.createQuery("SELECT e FROM SchoolDto e ORDER BY e.name ");
 			oResponse =  query.getResultList();			 	
 			
 		}
 		catch(Exception e)
 		{
-			
+			System.out.println(e);
 		}
 		
 		

@@ -6,60 +6,61 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table( name = "PROGRAMS")
+@Table(name = "PROGRAMS")
 public class ProgramDto implements iDto, Serializable
 {
-    
-	
-	private static final long serialVersionUID = 9003298511893551722L;
+
+	private static final long	serialVersionUID	= 9003298511893551722L;
 
 	@Id
 	@GeneratedValue
-	@Column( name = "RID")
-	private Long rid;
-	
-	@Column( name = "VALUE")
-	private String value;
-	
-	@Column( name = "DISABLED")
-	private Boolean disabled = false;
-	
-	
-	
-	
-	
+	@Column(name = "RID")
+	private Long				rid;
+
+	@Column(name = "VALUE")
+	private String				name;
+
+	@Column(name = "DISABLED")
+	private Boolean				disabled			= false;
+
+	@Column(name = "PRINT_INDEX")
+	private Integer				printIndex			= 0;
+
 	// CONSTRUCTOR(S)
 	public ProgramDto(String pValue, boolean pDisabled) {
-		
-		this.value = pValue;
+
+		this.name = pValue;
 		this.disabled = pDisabled;
 	}
+	public ProgramDto() {
 
-    public ProgramDto()
-    {
-    	
-    }
-    
-    
-    // SETTERS/GETTERS
-    public Boolean getDisabled() {
+	}
+
+	// SETTERS/GETTERS
+	public Boolean getDisabled()
+	{
 		return disabled;
 	}
-	public void setDisabled(Boolean pDisabled) 
+	public void setDisabled(Boolean pDisabled)
 	{
 		this.disabled = pDisabled;
 	}
-	public Long getRid() {
+	public Long getRid()
+	{
 		return rid;
 	}
-	public String getName() {
-		return value;
+	public String getName()
+	{
+		return name;
 	}
-	public void setName(String name) {
-		this.value = name;
+	public void setName(String name)
+	{
+		this.name = name;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -69,11 +70,13 @@ public class ProgramDto implements iDto, Serializable
 		int result = 1;
 		result = prime * result + ((disabled == null) ? 0 : disabled.hashCode());
 		result = prime * result + ((rid == null) ? 0 : rid.hashCode());
-		result = prime * result + ((value == null) ? 0 : value.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -93,28 +96,40 @@ public class ProgramDto implements iDto, Serializable
 		}
 		else
 			if (!rid.equals(other.rid)) return false;
-		if (value == null) {
-			if (other.value != null) return false;
+		if (name == null) {
+			if (other.name != null) return false;
 		}
 		else
-			if (!value.equals(other.value)) return false;
+			if (!name.equals(other.name)) return false;
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString()
 	{
-		return "ProgramDto [rid=" + rid + ", value=" + value + ", disabled=" + disabled + "]";
+		return "ProgramDto [rid=" + rid + ", value=" + name + ", disabled=" + disabled + "]";
 	}
-	
 
-	
+	/**
+	 * @return the printIndex
+	 */
+	public Integer getPrintIndex()
+	{
+		return printIndex;
+	}
 
-    
-    
-    
-    
+	/**
+	 * @param printIndex
+	 *            the printIndex to set
+	 */
+	public void setPrintIndex(Integer printIndex)
+	{
+		this.printIndex = printIndex;
+	}
+
 }

@@ -11,50 +11,40 @@
 			
 
 			<p:menubar>
+			
 				<p:submenu label="User" icon="ui-icon-document">
 					
 					<p:menuitem value="Login" url="/pages/login.xhtml" />
 					<p:separator />
 					<p:menuitem value="Logout" url="#" />
 				</p:submenu>
-
-				<p:submenu label="Board of Nursing" icon="ui-icon-pencil">
-					<p:menuitem value="Manage Schol Programs" url="/pages/manageSchoolPrograms.xhtml" />
-					<p:menuitem value="Manage Schools" url="/pages/manageSchool.xhtml" />
-					<p:menuitem value="Edit Cars" url="/pages/edit.xhtml" />
-					<p:menuitem value="Edit Cars Rich Faces" url="/pages/editCars.xhtml" />
-					<p:menuitem value="Edit Cars Ice Faces" url="/pages/editIceFaces.xhtml" />
-					<p:menuitem value="Sale Item" url="/templates/editSchoolsTemplate.xhtml" />
+				
+			
+				<p:submenu label="Nursing Schools" icon="ui-icon-pencil">
+					<p:menuitem value="Mange Schools" url="/templates/editSchoolsTemplate.xhtml" />
 				</p:submenu>
 				
-				<p:submenu label="" icon="ui-icon-pencil">
-					<p:menuitem value="Manage Programs" url="/pages/managePrograms.xhtml" />
-					<p:menuitem value="Manage Schools" url="#" icon="ui-icon-arrowreturnthick-1-e" />
+				
+				<p:submenu label="Board of Nursing" icon="ui-icon-pencil">
+					<p:menuitem value="Manage Programs" url="/templates/editPrograms.xhtml" />
+					<p:separator />
+					<p:menuitem value="Manage Annual Report" url="/templates/editPrograms.xhtml" />
+					
+				</p:submenu>
+				
+				
+				
+
+				<p:submenu label="Reports" icon="ui-icon-pencil">
+					<p:menuitem value="Wyoming Nursing Programs" url="/pages/reports/stateNursingPrograms.xhtml" />
 				</p:submenu>
 				
 
 				<p:submenu label="Help" icon="ui-icon-help">
 					<p:menuitem value="Contents" url="#" />
-					<p:submenu label="Search" icon="ui-icon-search">
-						<p:submenu label="Text">
-							<p:menuitem value="Workspace" url="#" />
-						</p:submenu>
-						<p:menuitem value="File" url="#" />
-					</p:submenu>
 				</p:submenu>
 
-				<p:submenu label="Actions" icon="ui-icon-gear">
-					<p:submenu label="Ajax" icon="ui-icon-refresh">
-						<p:menuitem value="Save" actionListener="#{menuView.save}"
-							icon="ui-icon-disk"  />
-						<p:menuitem value="Update" actionListener="#{menuView.update}"
-							icon="ui-icon-arrowrefresh-1-w" />
-					</p:submenu>
-					<p:submenu label="Non-Ajax" icon="ui-icon-newwin">
-						<p:menuitem value="Delete" actionListener="#{menuView.delete}"
-							icon="ui-icon-close" update="messages" ajax="false" />
-					</p:submenu>
-				</p:submenu>
+				
 
 				<p:menuitem value="Quit" url="http://www.primefaces.org"
 					icon="ui-icon-close" />

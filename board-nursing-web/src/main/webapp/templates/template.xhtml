@@ -30,9 +30,7 @@
 					<ui:include src="header.xhtml" />
 				</p:layoutUnit>
 		
-				<p:layoutUnit position="west" id="west" resizable="false" header="#{msg['menu.title']}" style="height:580px;overflow:hidden;" size="225">
-					<ui:include src="menu.xhtml" />
-				</p:layoutUnit>
+				
 				
 				<p:layoutUnit	styleClass="layoutUnitCenter" 	position="center" size="75%">
 						<ui:include src="menuBar.xhtml" />
@@ -43,16 +41,12 @@
 				
 				
 				<p:layoutUnit position="south" resizable="true" id="south" size="10%">
-					<ui:include src="footer.xhtml" />
+					<ui:insert name="footer" />
 				</p:layoutUnit>
 
 			</p:layout>
 			
-			<p:dialog modal="true" widgetVar="statusDialog" showHeader="false" 
-				draggable="false" closable="false" resizable="false" 
-				visible="false" position="center" maximizable="false" minimizable="false" >
-				<p:graphicImage value="#{resource['images/ajax-loader.gif']}" />
-			</p:dialog>
+			
 			
 		
 		</h:head>

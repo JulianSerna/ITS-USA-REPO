@@ -1,0 +1,133 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contentType="text/html" id="fview">
+
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>BOARD OF NURSING</title>
+
+	</h:head>
+
+	<h:body>
+
+		<p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
+
+			<p:layoutUnit position="north" size="15%" id="north">
+				<ui:include src="header.xhtml" />
+			</p:layoutUnit>
+
+
+
+			<p:layoutUnit styleClass="layoutUnitCenter" position="center" size="85%">
+
+				<ui:include src="menuBar.xhtml" />
+
+
+				<!-- FORM -->
+				<h:form id="programsForm">
+
+					<!-- MESSAGE BOARD -->
+					<p:growl id="msgs" showDetail="true" />
+
+					<!-- INIT THE CONTROLLER -->
+					<f:event type="preRenderView" listener="#{programController.init}" />
+
+					<!-- LAYOUT -->
+					<p:panelGrid columns="1">
+
+						<!-- SUB LAYOUT -->
+						<h:panelGroup style="width:60%; align:top;">
+
+							<!-- PANEL -->
+							<p:panel style="width: 100%;">
+
+								<p:dataTable id="editProgramsTable" value="#{programController.allProgramsList}" var="oDto" selection="#{programController.selectedProgram}"
+									rowKey="#{oDto.rid}" editable="true" selectionMode="single" scrollable="true" scrollHeight="90%" style="width:100%;" draggableRows="true">
+
+									<f:facet name="header">  
+											Manage School Programs
+									</f:facet>
+
+
+									<p:ajax event="rowReorder" listener="#{programController.onRowReorder}" />
+
+
+
+									<p:ajax event="rowEdit" listener="#{programController.onRowEdit}" update=":programsForm:msgs" />
+									<p:ajax event="rowEditCancel" listener="#{programController.onRowCancel}" update=":programsForm:msgs" />
+
+
+
+									<p:column headerText="RID" width="5%">
+										<h:outputText value="#{oDto.rid}" />
+									</p:column>
+
+									<p:column headerText="NAME" width="50%">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{oDto.name}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{oDto.name}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+
+
+									<p:column headerText="INDEX" width="5%">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{oDto.printIndex}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{oDto.printIndex}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+
+
+									<p:column width="10%">
+										<f:facet name="header">
+											<h:outputText value="DISABLED" />
+										</f:facet>
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{oDto.disabled}" id="disabled" />
+											</f:facet>
+											<f:facet name="input">
+												<h:selectOneMenu value="#{oDto.disabled}">
+													<f:selectItems value="#{programController.disabledList}" var="oDis" itemLabel="#{oDis}" itemValue="#{oDis}" />
+												</h:selectOneMenu>
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+
+									<p:column style="width:32px">
+										<p:rowEditor />
+									</p:column>
+
+
+
+								</p:dataTable>
+							</p:panel>
+						</h:panelGroup>
+
+
+					</p:panelGrid>
+
+				</h:form>
+
+
+			</p:layoutUnit>
+		</p:layout>
+
+		<p:layoutUnit position="south" resizable="true" id="south" size="10%">
+			<ui:include src="/pages/editProgramsFooter.xhtml" />
+		</p:layoutUnit>
+
+	</h:body>
+
+</f:view>
+</html>
