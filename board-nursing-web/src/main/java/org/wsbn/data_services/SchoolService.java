@@ -9,9 +9,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import org.wsbn.dao.ProgramsDao;
+import org.wsbn.dao.SchoolAnnualDataDao;
 import org.wsbn.dao.SchoolsDao;
 import org.wsbn.dao.SchoolsProgramsDao;
 import org.wsbn.dto.ProgramDto;
+import org.wsbn.dto.SchoolAnnualDataDto;
 import org.wsbn.dto.SchoolDto;
 import org.wsbn.dto.SchoolProgramDto;
 
@@ -26,6 +28,7 @@ public class SchoolService implements Serializable
 	// COLLABORATORS
 	SchoolsDao mSchoolsDao; 
 	SchoolsProgramsDao mSchoolsProgramsDao;
+	SchoolAnnualDataDao mSchoolAnnualDataDao;
 	ProgramsDao mProgramsDao;
 	
 	
@@ -58,6 +61,7 @@ public class SchoolService implements Serializable
 			 if(this.mSchoolsDao == null)   this.mSchoolsDao = new SchoolsDao();
 			 if(this.mProgramsDao == null)  this.mProgramsDao = new ProgramsDao();
 			 if(this.mSchoolsProgramsDao == null) this.mSchoolsProgramsDao = new SchoolsProgramsDao();
+			 if(this.mSchoolAnnualDataDao == null) this.mSchoolAnnualDataDao = new SchoolAnnualDataDao();
 			 
 			 // Lists
 			 this.allSchoolsList = null;
@@ -82,6 +86,15 @@ public class SchoolService implements Serializable
 	public List<SchoolDto> getAllSchoolsList()
 	{
 		return this.allSchoolsList;
+	}
+	
+	public List<SchoolAnnualDataDto> getSchoolAnnualData(Long schoolId)
+	{
+		return this.mSchoolAnnualDataDao.findBySchoolRid(schoolId);
+	}
+	public List<SchoolAnnualDataDto> getAllSchoolsAnnualData()
+	{
+		return this.mSchoolAnnualDataDao.findAll();
 	}
 		
 	public void  saveFullSchoolDto(SchoolDto pSchoolDto)

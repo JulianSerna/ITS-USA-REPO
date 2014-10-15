@@ -1,0 +1,155 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<f:view contentType="text/html" id="fview">
+
+
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>BOARD OF NURSING</title>
+		<ui:debug />
+	</h:head>
+
+	<h:body onload="statusDialog.hide();">
+
+		<p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
+
+			<p:layoutUnit position="north" size="15%" id="north">
+				<ui:include src="header.xhtml" />
+			</p:layoutUnit>
+
+			<p:layoutUnit styleClass="layoutUnitCenter" position="center" size="60%">
+				<ui:include src="menuBar.xhtml" />
+
+				<!-- LIST OF SCHOOLS -->
+
+				<h:form id="annualDataForm">
+
+					<p:growl id="msgs" showDetail="true" />
+
+					<p:contextMenu for="schoolsAnnualDataTable">
+						<p:menuitem value="Delete" update="schoolsAnnualDataTable" icon="ui-icon-close" action="#{schoolAnnualDataController.deleteSchool}" />
+					</p:contextMenu>
+
+
+					<f:event type="preRenderView" listener="#{schoolAnnualDataController.init}" />
+
+
+
+
+
+
+
+
+					<!-- TABLE -->
+					<p:dataTable id="schoolsAnnualDataTable" var="oDto" value="#{schoolAnnualDataController.allSchoolsAnnualDataDtoList}"
+						selection="#{schoolAnnualDataController.selectedSchool}" editable="true" style="margin-bottom:20px" scrollable="true" scrollHeight="90%"
+						rowKey="#{oDto.rid}" selectionMode="single">
+
+
+						<f:facet name="header">
+					     	EDIT SCHOOLS
+					    </f:facet>
+
+						<p:ajax event="rowSelect" listener="#{schoolAnnualDataController.onRowSelect}" />
+						<p:ajax event="rowUnselect" listener="#{schoolControll.onRowUnselect}" />
+
+
+						<p:ajax event="rowEdit" listener="#{schoolAnnualDataController.onEdit}" update=":annualDataForm:msgs" />
+						<p:ajax event="rowEditCancel" listener="#{schoolAnnualDataController.onCancel}" update=":annualDataForm:msgs" />
+
+
+
+						<p:column headerText="RID" width="5%">
+							<h:outputText value="#{oDto.rid}" />
+						</p:column>
+
+						<p:column headerText="SCHOOL RID" width="5%">
+							<h:outputText value="#{oDto.schoolRid}" style="width:100%" />
+						</p:column>
+
+						<p:column headerText="PROGRAM RID" width="5%">
+							<h:outputText value="#{oDto.schoolRid}" style="width:100%" />
+						</p:column>
+
+						<p:column headerText="YEAR" width="10%">
+							<h:outputText value="#{oDto.year}" style="width:100%" />
+						</p:column>
+
+
+						<p:column headerText="ADMISSIONS" width="5%">
+							<h:outputText value="#{oDto.admissions}" style="width:100%" />
+						</p:column>
+
+
+						<p:column headerText="GRADUATIONS" width="5%">
+							<h:outputText value="#{oDto.graduations}" style="width:100%" />
+						</p:column>
+						
+
+						<p:column headerText="EDIT" width="7%">
+							<p:rowEditor />
+						</p:column>
+
+
+					</p:dataTable>
+
+
+				</h:form>
+
+				<!-- END EDITABLE TABLE -->
+
+
+
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="south" resizable="true" id="south" size="20%">
+			<center>
+
+
+				<p:panel header="SELECT SCHOOL" style="width: 100%; height: 100%;">
+
+					<h:form id="selectSchoolForm">
+
+						<p:selectOneMenu id="selectedSchool" value="#{schoolAnnualDataController.selectedSchoolRid}">
+							<p:ajax event="change" listener="#{schoolAnnualDataController.onSchoolChangedEvent}" update=":annualDataForm:schoolsAnnualDataTable" process="selectSchoolForm"  />
+							<f:selectItem itemLabel="Select One" itemValue=""  noSelectionOption="true"  />
+							<f:selectItems value="#{schoolAnnualDataController.allSchoolsDtoList}" var="schoolDto" itemValue="#{schoolDto.rid}" itemLabel="#{schoolDto.name}" />
+							
+						</p:selectOneMenu>
+					</h:form>
+				</p:panel>
+
+
+
+
+			</center>
+		</p:layoutUnit>
+
+			
+
+		</p:layout>
+
+		
+
+
+
+
+	</h:body>
+
+</f:view>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

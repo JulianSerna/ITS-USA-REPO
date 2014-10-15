@@ -20,6 +20,9 @@ public class ProgramDto implements iDto, Serializable
 	@Column(name = "VALUE")
 	private String				name;
 
+	@Column(name = "GROUP_RID")
+	private Long groupRid;
+	
 	@Column(name = "DISABLED")
 	private Boolean				disabled			= false;
 
@@ -57,7 +60,26 @@ public class ProgramDto implements iDto, Serializable
 	{
 		this.name = name;
 	}
+	
+	
+	
+	
+	
 
+	/**
+	 * @return the groupId
+	 */
+	public Long getGroupRid()
+	{
+		return groupRid;
+	}
+	/**
+	 * @param groupId the groupId to set
+	 */
+	public void setGroupRid(Long groupRid)
+	{
+		this.groupRid = groupRid;
+	}
 	/*
 	 * (non-Javadoc)
 	 * 

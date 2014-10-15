@@ -1,7 +1,10 @@
 org\wsbn\bootstrap\Main.class
+org\wsbn\dto\SchoolAnnualDataDto.class
+org\wsbn\controllers\iController.class
 org\wsbn\dto\iDto.class
 org\wsbn\controllers\ProgramController.class
 org\wsbn\dao\Dao.class
+org\wsbn\dto\ProgramGroupDto.class
 org\wsbn\business\UserManager.class
 org\wsbn\controllers\reports\ProgramSchoolsReportController.class
 org\wsbn\dto\SchoolProgramDto.class
@@ -11,12 +14,15 @@ org\wsbn\dto\UserDto.class
 org\wsbn\utils\RandomHelper.class
 org\wsbn\vo\ProgramVo.class
 org\wsbn\controllers\SchoolController.class
+org\wsbn\dao\ProgramGroupsDao.class
 org\wsbn\dao\UserManager.class
 org\wsbn\dao\SchoolsDao.class
 org\wsbn\utils\InventoryItem.class
 org\wsbn\utils\InventoryVendorItem.class
 org\wsbn\dto\ProgramDto.class
 org\wsbn\dao\ProgramsDao.class
+org\wsbn\controllers\SchoolAnnualDataController.class
+org\wsbn\dao\SchoolAnnualDataDao.class
 org\wsbn\data_services\SchoolService.class
 org\wsbn\dto\SchoolProgramKey.class
 org\wsbn\servlets\EmfServlet.class

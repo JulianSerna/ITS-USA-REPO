@@ -19,7 +19,7 @@ import org.wsbn.dto.SchoolDto;
 
 @ManagedBean
 @ViewScoped
-public class SchoolController implements Serializable
+public class SchoolController implements iController, Serializable
 {
 
 	private static final long	serialVersionUID	= 1L;
@@ -32,6 +32,7 @@ public class SchoolController implements Serializable
 
 	// IoC
 	// must provide the setter method
+	
 	public void setSchoolService(SchoolService pSchoolService)
 	{
 
@@ -99,7 +100,7 @@ public class SchoolController implements Serializable
 
 	public void onRowSelect(SelectEvent event)
 	{
-		this.setSelectedSchool(((SchoolDto) event.getObject()));
+		this.mSelectedSchoolDto = (((SchoolDto) event.getObject()));
 
 	}
 

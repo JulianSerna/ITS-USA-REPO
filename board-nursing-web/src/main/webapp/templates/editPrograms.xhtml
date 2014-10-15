@@ -35,16 +35,17 @@
 					<f:event type="preRenderView" listener="#{programController.init}" />
 
 					<!-- LAYOUT -->
-					<p:panelGrid columns="1">
+					 
 
 						<!-- SUB LAYOUT -->
-						<h:panelGroup style="width:60%; align:top;">
-
+						
 							<!-- PANEL -->
-							<p:panel style="width: 100%;">
+						 
 
 								<p:dataTable id="editProgramsTable" value="#{programController.allProgramsList}" var="oDto" selection="#{programController.selectedProgram}"
-									rowKey="#{oDto.rid}" editable="true" selectionMode="single" scrollable="true" scrollHeight="90%" style="width:100%;" draggableRows="true">
+									rowKey="#{oDto.rid}" editable="true" selectionMode="single" scrollable="true" scrollHeight="90%" 
+									style="width:100%;height: 100%;" draggableRows="false"  rows="100"
+								>
 
 									<f:facet name="header">  
 											Manage School Programs
@@ -61,17 +62,36 @@
 
 
 									<p:column headerText="RID" width="5%">
-										<h:outputText value="#{oDto.rid}" />
+										<h:outputText value="#{oDto.rid}"  style="width:100%" />
 									</p:column>
 
-									<p:column headerText="NAME" width="50%">
+									<p:column headerText="NAME" width="40%">
 										<p:cellEditor>
 											<f:facet name="output">
-												<h:outputText value="#{oDto.name}" />
+												<h:outputText value="#{oDto.name}"   style="width:100%" />
 											</f:facet>
 											<f:facet name="input">
-												<p:inputText value="#{oDto.name}" />
+												<p:inputText value="#{oDto.name}"  style="width:100%" />
 											</f:facet>
+										</p:cellEditor>
+									</p:column>
+
+									<!--  SELECTED GROUPS -->
+									<p:column headerText="GROUP" width="10%">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{oDto.groupRid}"  style="width:100%" />
+											</f:facet>
+
+											<f:facet name="input">
+												<p:selectOneMenu id="programGroup" value="#{oDto.groupRid}" style="width:100%">
+													<f:selectItems  style="width:100%"
+														var="oGroupDto" value="#{programController.allProgramGroups}"
+														itemValue="#{oGroupDto.rid}"  itemLabel="#{oGroupDto.groupName}"  filter="false" 
+													 />
+												</p:selectOneMenu>
+											</f:facet>
+
 										</p:cellEditor>
 									</p:column>
 
@@ -79,10 +99,10 @@
 									<p:column headerText="INDEX" width="5%">
 										<p:cellEditor>
 											<f:facet name="output">
-												<h:outputText value="#{oDto.printIndex}" />
+												<h:outputText value="#{oDto.printIndex}"  style="width:100%" />
 											</f:facet>
 											<f:facet name="input">
-												<p:inputText value="#{oDto.printIndex}" />
+												<p:inputText value="#{oDto.printIndex}"  style="width:100%" />
 											</f:facet>
 										</p:cellEditor>
 									</p:column>
@@ -90,15 +110,15 @@
 
 									<p:column width="10%">
 										<f:facet name="header">
-											<h:outputText value="DISABLED" />
+											<h:outputText value="DISABLED"  style="width:100%" />
 										</f:facet>
 										<p:cellEditor>
 											<f:facet name="output">
-												<h:outputText value="#{oDto.disabled}" id="disabled" />
+												<h:outputText value="#{oDto.disabled}" id="disabled"  style="width:100%" />
 											</f:facet>
 											<f:facet name="input">
-												<h:selectOneMenu value="#{oDto.disabled}">
-													<f:selectItems value="#{programController.disabledList}" var="oDis" itemLabel="#{oDis}" itemValue="#{oDis}" />
+												<h:selectOneMenu value="#{oDto.disabled}"  style="width:100%">
+													<f:selectItems value="#{programController.disabledList}" var="oDis" itemLabel="#{oDis}" itemValue="#{oDis}"  style="width:100%" />
 												</h:selectOneMenu>
 											</f:facet>
 										</p:cellEditor>
@@ -111,11 +131,11 @@
 
 
 								</p:dataTable>
-							</p:panel>
-						</h:panelGroup>
+							 
+					
 
 
-					</p:panelGrid>
+					 
 
 				</h:form>
 
@@ -123,8 +143,8 @@
 			</p:layoutUnit>
 		</p:layout>
 
-		<p:layoutUnit position="south" resizable="true" id="south" size="10%">
-			<ui:include src="/pages/editProgramsFooter.xhtml" />
+		<p:layoutUnit position="south" resizable="true" id="south" size="0%">
+			<!-- <ui:include src="/pages/editProgramsFooter.xhtml" /> -->
 		</p:layoutUnit>
 
 	</h:body>

@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+
+
+	<center>
+
+
+		<p:panel header="SELECT SCHOOL" style="width: 100%;">
+
+			<h:form id="selectSchoolForm">
+
+				<!-- INIT THE CONTROLLER -->
+				<f:event type="preRenderView" listener="#{schoolAnnualDataController.init}" />
+
+				
+				<h:selectOneMenu id="selectedSchool" value="Select School">
+					<f:selectItem itemLabel="Select One" itemValue="" />
+					
+					<f:selectItems value="#{schoolAnnualDataController.allSchoolsDtoList}" var="schoolDto"
+						itemValue="#{schoolDto.rid}"  itemLabel="#{schoolDto.name}"  
+					/>
+					<p:ajax event="change" value="#{schoolAnnualDataController.loadSchoolAnnualData(schoolDto.rid)}"/>
+				</h:selectOneMenu>
+
+				
+
+
+			</h:form>
+		</p:panel>
+
+
+
+
+	</center>
+</ui:composition>

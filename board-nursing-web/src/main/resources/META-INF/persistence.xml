@@ -13,6 +13,8 @@
 	<class>org.wsbn.dto.UserDto</class>
 	<class>org.wsbn.dto.SchoolDto</class>
 	<class>org.wsbn.dto.SchoolProgramDto</class>
+	<class>org.wsbn.dto.ProgramGroupDto</class>
+	<class>org.wsbn.dto.SchoolAnnualDataDto</class>
 	
 	
 			<properties>
@@ -33,9 +35,9 @@
 				<!-- Configuring Connection Pool -->
 				<property name="hibernate.c3p0.min_size" value="1" />
 				<property name="hibernate.c3p0.max_size" value="1" />
-				<property name="hibernate.c3p0.timeout" value="500" />
+				<property name="hibernate.c3p0.timeout" value="300" />
 				<property name="hibernate.c3p0.max_statements" value="500" />
-				<property name="hibernate.c3p0.idle_test_period" value="2000" />
+				<property name="hibernate.c3p0.idle_test_period" value="300" />
 			</properties>
 	
 	

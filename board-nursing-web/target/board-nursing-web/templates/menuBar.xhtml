@@ -12,16 +12,17 @@
 
 			<p:menubar>
 			
-				<p:submenu label="User" icon="ui-icon-document">
+				<p:submenu label="User" icon="ui-icon-person">
 					
-					<p:menuitem value="Login" url="/pages/login.xhtml" />
+					<p:menuitem value="Login" url="/pages/login.xhtml"  icon="ui-icon-unlocked" />
 					<p:separator />
-					<p:menuitem value="Logout" url="#" />
+					<p:menuitem value="Logout" url="#"  icon="ui-icon-extlink" />
 				</p:submenu>
 				
 			
 				<p:submenu label="Nursing Schools" icon="ui-icon-pencil">
 					<p:menuitem value="Mange Schools" url="/templates/editSchoolsTemplate.xhtml" />
+					<p:menuitem value="Admissions/Graduations" url="/templates/editAdmissionsGraduations.xhtml"  icon="ui-icon-script"  />
 				</p:submenu>
 				
 				
@@ -31,17 +32,18 @@
 					<p:menuitem value="Manage Annual Report" url="/templates/editPrograms.xhtml" />
 					
 				</p:submenu>
-				
-				
-				
+								
 
-				<p:submenu label="Reports" icon="ui-icon-pencil">
+				<p:submenu label="Reports" icon="ui-icon-print">
 					<p:menuitem value="Wyoming Nursing Programs" url="/pages/reports/stateNursingPrograms.xhtml" />
+					<p:menuitem value="Wyoming Program Admission Report" url="/pages/reports/admissionReport.xhtml" />
 				</p:submenu>
 				
 
 				<p:submenu label="Help" icon="ui-icon-help">
-					<p:menuitem value="Contents" url="#" />
+					<p:menuitem value="Contents" url="#"   icon="ui-icon-note"   />
+					<p:menuitem value="Enter Product Key"   icon="ui-icon-key" url="#" />
+					
 				</p:submenu>
 
 				

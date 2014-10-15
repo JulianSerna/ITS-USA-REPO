@@ -15,8 +15,10 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.ReorderEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
+import org.wsbn.dao.ProgramGroupsDao;
 import org.wsbn.dao.ProgramsDao;
 import org.wsbn.dto.ProgramDto;
+import org.wsbn.dto.ProgramGroupDto;
 import org.wsbn.dto.SchoolDto;
 
 
@@ -33,6 +35,7 @@ public class ProgramController implements Serializable
 	
 	// lists
 	private List<ProgramDto> mProgramsList;
+	private List<ProgramGroupDto> mProgramGroupsList;
 	private List<Boolean> mDisabledList;
 	
 	// variables
@@ -40,6 +43,7 @@ public class ProgramController implements Serializable
 
 	// COLLABORATORS
 	private ProgramsDao mProgramsDao = null;
+	private ProgramGroupsDao mProgramGroupsDao = null;
 
 	
 
@@ -56,13 +60,16 @@ public class ProgramController implements Serializable
 		{
 			// set all daos
 			if(this.mProgramsDao == null) this.mProgramsDao = new ProgramsDao();
+			if(this.mProgramGroupsDao == null) this.mProgramGroupsDao= new ProgramGroupsDao();
 			
 			// make all lists null;
 			this.mProgramsList = null;
+			this.mProgramGroupsList = null;
 			this.mSelectedProgram = null;
 			
 			// reload the lists
 			this.mProgramsList = this.mProgramsDao.findAll();
+			this.mProgramGroupsList = this.mProgramGroupsDao.findAll();
 			this.buildDisabledList();
 		}
 		catch(Exception e)
@@ -122,8 +129,11 @@ public class ProgramController implements Serializable
 	{
 		return this.mSelectedProgram;
 	}
-	 
-		
+	
+	public List<ProgramGroupDto> getAllProgramGroups()
+	{
+		return this.mProgramGroupsList;
+	}
 	
 	
 	// EDITS PROCESSING

@@ -31,48 +31,44 @@
 				<f:event type="preRenderView" listener="#{programSchoolsReportController.init}" />
 
 				<!-- LAYOUT -->
-				<p:panelGrid columns="1">
-
-					<!-- SUB LAYOUT -->
-					<h:panelGroup style="width:60%; align:top;">
-
-						<!-- PANEL -->
-						<p:panel style="width: 100%;">
-
-							<p:dataTable id="programReportTable" value="#{programSchoolsReportController.allProgramsVoList}" var="oDto" rowKey="#{oDto.programRid}" editable="false"
-								selectionMode="single" scrollable="true" scrollHeight="90%" style="width:100%;" draggableRows="false">
-
-								<f:facet name="header">  
-									WYOMING NURSING PROGRAMS REPORT
-								</f:facet>
 
 
-								<p:column headerText="PROGRAM" width="100%">
-									<h:outputText value="#{oDto.programName}" />
-								</p:column>
+				<!-- SUB LAYOUT -->
 
-								<!--  SUB TABLE -->
-								<p:subTable var="oSchoolVo" value="#{oDto.schoolVoList}">
+				<!-- PANEL -->
 
-									<f:facet name="header">
-										<h:outputText value="#{oDto.programName}" />
-									</f:facet>
 
-									<p:column>
-										<h:outputText value="#{oSchoolVo.name}" />
-									</p:column>
+				<p:dataTable id="programReportTable" value="#{programSchoolsReportController.allProgramsVoList}" var="oDto" rowKey="#{oDto.programRid}" editable="false"
+					selectionMode="single" scrollable="false" scrollHeight="90%" style="width:100%;" draggableRows="false">
+
+
+					<f:facet name="header">  
+						WYOMING NURSING PROGRAMS REPORT
+					</f:facet>
+
+
+					<!--  SUB TABLE -->
+					<p:subTable id="pdfReport" var="oSchoolVo" value="#{oDto.schoolVoList}">
+
+						<f:facet name="header">
+							<h:outputText value="#{oDto.programName}" />
+						</f:facet>
+
+						<p:column>
+							<h:outputText value="#{oSchoolVo.name}" />
+						</p:column>
 
 
 
-								</p:subTable>
+					</p:subTable>
 
 
 
 
-							</p:dataTable>
-						</p:panel>
-					</h:panelGroup>
-				</p:panelGrid>
+				</p:dataTable>
+
+
+
 
 			</h:form>
 
