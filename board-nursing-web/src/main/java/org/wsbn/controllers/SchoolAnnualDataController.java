@@ -40,7 +40,7 @@ public class SchoolAnnualDataController implements iController, Serializable
 	}
 
 	// STATE
-	private SchoolDto			mNewSchoolDto;
+	private SchoolAnnualDataDto			mNewSchoolDto;
 	private SchoolAnnualDataDto			mSelectedSchoolDto;
 	private boolean				bInit			= false;
 
@@ -69,7 +69,7 @@ public class SchoolAnnualDataController implements iController, Serializable
 			this.mSchoolsAnnualDataDtoList = null;
 			this.mAllProgramsList = null;
 
-			this.mSchoolsAnnualDataDtoList = this.schoolService.getAllSchoolsAnnualData();
+			//this.mSchoolsAnnualDataDtoList = this.schoolService.getAllSchoolsAnnualData();
 			this.mAllProgramsList = this.schoolService.getAllProgramsList();
 			this.mAllSchoolsList = this.schoolService.getAllSchoolsList();
 		}
@@ -126,10 +126,10 @@ public class SchoolAnnualDataController implements iController, Serializable
 
 	}
 
-	public SchoolDto getNewSchoolDto()
+	public SchoolAnnualDataDto getNewSchoolDto()
 	{
 
-		if (this.mNewSchoolDto == null) this.mNewSchoolDto = new SchoolDto();
+		if (this.mNewSchoolDto == null) this.mNewSchoolDto = new SchoolAnnualDataDto();
 		return this.mNewSchoolDto;
 
 	}
@@ -143,7 +143,7 @@ public class SchoolAnnualDataController implements iController, Serializable
 	public void addAction()
 	{
 		// add school dto
-		this.schoolService.addFullSchoolDto(this.mNewSchoolDto);
+		this.schoolService.addSchoolAnnualData(this.mNewSchoolDto);
 		
 		this.mNewSchoolDto = null;
 

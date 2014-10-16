@@ -128,6 +128,21 @@ public class SchoolService implements Serializable
 		
 	}
 	
+	public void  addSchoolAnnualData(SchoolAnnualDataDto pSchoolDto)
+	{
+		
+		
+		// save the school dto
+		//this.mSchoolsDao.addEntity(pSchoolDto);
+				
+		// save the school-program dto list
+		//this.mSchoolsProgramsDao.updateSchoolRids(pSchoolDto);
+		
+		// refresh just updated list ...
+		//this.refreshAllLists();
+		
+	}
+	
 	public void  deleteFullSchoolDto(SchoolDto pSchoolDto)
 	{
 		
