@@ -11,7 +11,7 @@
 	<groupId>org.wyoming.state</groupId>
 	<artifactId>board-nursing-app</artifactId>
 	<packaging>war</packaging>
-	<version>1.0.4</version>
+	<version>1.0.5</version>
 	<name>Board of Nursing Web</name>
 	<url>http://maven.apache.org</url>
 
@@ -146,12 +146,14 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.0.1</version>
+			<scope>provided</scope>
 		</dependency>
 
 

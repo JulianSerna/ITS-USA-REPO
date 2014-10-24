@@ -15,6 +15,9 @@
 	<class>org.wsbn.dto.SchoolProgramDto</class>
 	<class>org.wsbn.dto.ProgramGroupDto</class>
 	<class>org.wsbn.dto.SchoolAnnualDataDto</class>
+	<class>org.wsbn.dto.YearDto</class>
+	<class>org.wsbn.dto.DegreeDto</class>
+	
 	
 	
 			<properties>

@@ -209,7 +209,7 @@ public class SchoolAnnualDataDao implements Serializable
 		try
 		{
 			
-			Query query = oEm.createQuery("SELECT e FROM SchoolAnnualDataDto e WHERE e.schoolRid = :schoolRid ORDER BY e.year DESC");
+			Query query = oEm.createQuery("SELECT e FROM SchoolAnnualDataDto e WHERE e.schoolRid = :schoolRid ORDER BY e.programRid, e.year DESC");
 			query.setParameter("schoolRid", schoolRid);
 			oResponse =  query.getResultList();			 	
 			

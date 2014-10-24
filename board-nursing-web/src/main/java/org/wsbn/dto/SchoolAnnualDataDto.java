@@ -12,46 +12,58 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-
-
-
+import org.wsbn.vo.SchoolAnnualDataVo;
 
 @Entity
 @Table(name = "SCHOOL_ANNUAL_DATA")
 public class SchoolAnnualDataDto implements Serializable
 {
 
-	
 	private static final long	serialVersionUID	= 1L;
 	// STATE
-		
+
 	@Id
 	@GeneratedValue
 	@Column(name = "RID")
-	private Long rid;
-	
+	private Long				rid;
+
 	@Column(name = "SCHOOL_RID")
-	private Long schoolRid;
+	private Long				schoolRid;
 
 	@Column(name = "PROGRAM_RID")
-	private Long programRid;
+	private Long				programRid;
+
+	@Column(name = "DEGREE_RID")
+	private Long				degreeRid;
 	
 	@Column(name = "YEAR")
-	private Integer year;
-	
+	private Integer				year;
+
 	@Column(name = "ADMISSIONS")
-	private Integer admissions;
-	
+	private Integer				admissions;
+
 	@Column(name = "GRADUATIONS")
-	private Integer graduations;
+	private Integer				graduations;
+
+	@Column(name = "ATTRITION_ACADEMIC")
+	private Integer				attritionA;
+
+	@Column(name = "ATTRITION_PERSONAL")
+	private Integer				attritionP;
+
 	
 	
 	// CONSTRUCTOR(S)
 	public SchoolAnnualDataDto() 
 	{
-
+		this.attritionA = 0;
+		this.attritionP = 0;
 	}
-
+	public SchoolAnnualDataDto(Long pRid) {
+		this.rid = pRid;
+		this.attritionA = 0;
+		this.attritionP = 0;
+	}
 
 	/**
 	 * @return the schoolRid
@@ -61,15 +73,14 @@ public class SchoolAnnualDataDto implements Serializable
 		return schoolRid;
 	}
 
-
 	/**
-	 * @param schoolRid the schoolRid to set
+	 * @param schoolRid
+	 *            the schoolRid to set
 	 */
 	public void setSchoolRid(Long schoolRid)
 	{
 		this.schoolRid = schoolRid;
 	}
-
 
 	/**
 	 * @return the programRid
@@ -79,15 +90,14 @@ public class SchoolAnnualDataDto implements Serializable
 		return programRid;
 	}
 
-
 	/**
-	 * @param programRid the programRid to set
+	 * @param programRid
+	 *            the programRid to set
 	 */
 	public void setProgramRid(Long programRid)
 	{
 		this.programRid = programRid;
 	}
-
 
 	/**
 	 * @return the year
@@ -97,15 +107,14 @@ public class SchoolAnnualDataDto implements Serializable
 		return year;
 	}
 
-
 	/**
-	 * @param year the year to set
+	 * @param year
+	 *            the year to set
 	 */
 	public void setYear(Integer year)
 	{
 		this.year = year;
 	}
-
 
 	/**
 	 * @return the admissions
@@ -115,15 +124,17 @@ public class SchoolAnnualDataDto implements Serializable
 		return admissions;
 	}
 
-
 	/**
-	 * @param admissions the admissions to set
+	 * @param admissions
+	 *            the admissions to set
 	 */
-	public void setAdmissions(Integer admissions)
+	public void setAdmissions(Integer pValue)
 	{
-		this.admissions = admissions;
+		// validate arguments
+		if ( pValue == null ) pValue = 0;
+		
+		this.admissions = pValue;
 	}
-
 
 	/**
 	 * @return the graduations
@@ -133,15 +144,14 @@ public class SchoolAnnualDataDto implements Serializable
 		return graduations;
 	}
 
-
 	/**
-	 * @param graduations the graduations to set
+	 * @param graduations
+	 *            the graduations to set
 	 */
 	public void setGraduations(Integer graduations)
 	{
 		this.graduations = graduations;
 	}
-
 
 	/**
 	 * @return the rid
@@ -151,8 +161,83 @@ public class SchoolAnnualDataDto implements Serializable
 		return rid;
 	}
 
+	/**
+	 * @return the attritionA
+	 */
+	public Integer getAttritionA()
+	{
+		return attritionA;
+	}
+	/**
+	 * @param attritionA
+	 *            the attritionA to set
+	 */
+	public void setAttritionA(Integer pValue)
+	{
+		// validate arguments
+		if ( pValue == null ) pValue = 0;
+		this.attritionA = pValue;
+	}
+	/**
+	 * @return the attritonP
+	 */
+	public Integer getAttritionP()
+	{
+		return attritionP;
+	}
+	/**
+	 * @param attritonP
+	 *            the attritonP to set
+	 */
+	public void setAttritionP(Integer pValue)
+	{
+		// validate arguments
+		if ( pValue == null ) pValue = 0;
+		this.attritionP = pValue;
+	}
 
-	/* (non-Javadoc)
+	/**
+	 * @return the degreeRid
+	 */
+	public Long getDegreeRid()
+	{
+		return degreeRid;
+	}
+	/**
+	 * @param degreeRid the degreeRid to set
+	 */
+	public void setDegreeRid(Long pValue)
+	{
+		// validate arguments
+		if ( pValue == null ) pValue = 1L;
+		this.degreeRid = pValue;
+	}
+	
+	
+	
+	
+	
+	// ============== METHODS ==================
+	public SchoolAnnualDataVo getVo()
+	{
+		SchoolAnnualDataVo oResponse = new SchoolAnnualDataVo(this.rid.toString());
+		
+		oResponse.setSchoolRid(this.schoolRid.toString());
+		oResponse.setProgramRid(this.programRid.toString());	 
+		oResponse.setDegreeRid(this.degreeRid.toString());
+		oResponse.setYear(this.year.toString());
+		oResponse.setAdmissions(this.admissions.toString()); 
+		oResponse.setGraduations(this.graduations.toString());
+		oResponse.setAttritionA(this.attritionA.toString());
+		oResponse.setAttritionP(this.attritionP.toString());
+				 
+		
+		return oResponse;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -164,8 +249,9 @@ public class SchoolAnnualDataDto implements Serializable
 		return result;
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -182,19 +268,5 @@ public class SchoolAnnualDataDto implements Serializable
 			if (!rid.equals(other.rid)) return false;
 		return true;
 	}
-	
-	
-	
-	// METHODS
-	
-	
-	
-	
-	
-	
 
-	
-	
-	
-	
 }

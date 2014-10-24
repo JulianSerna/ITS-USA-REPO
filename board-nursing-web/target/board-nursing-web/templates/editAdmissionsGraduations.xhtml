@@ -2,10 +2,6 @@
 	xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:ui="http://java.sun.com/jsf/facelets">
 
 
-
-
-
-
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>BOARD OF NURSING</title>
@@ -53,14 +49,14 @@
 
 
 				<!-- TABLE -->
-				<p:dataTable id="schoolsAnnualDataTable" var="oDto" value="#{schoolAnnualDataController.allSchoolsAnnualDataDtoList}"
-					selection="#{schoolAnnualDataController.selectedSchool}" editable="true" style="margin-bottom:20px" scrollable="true" scrollHeight="90%"
-					rowKey="#{oDto.rid}" selectionMode="single">
+				<p:dataTable id="schoolsAnnualDataTable" var="oVo" value="#{schoolAnnualDataController.getSchoolsAnnualDataVoList()}"
+					selection="#{schoolAnnualDataController.selectedSchool}" editable="true" style="margin-bottom:20px" scrollable="true" scrollHeight="100%"
+					rowKey="#{oVo.rid}" selectionMode="single">
 
 
 					<f:facet name="header">
-					     	EDIT SCHOOLS
-					    </f:facet>
+					     	EDIT SCHOOLS ANNUAL DATA
+					 </f:facet>
 
 					<p:ajax event="rowSelect" listener="#{schoolAnnualDataController.onRowSelect}" />
 					<p:ajax event="rowUnselect" listener="#{schoolControll.onRowUnselect}" />
@@ -71,33 +67,87 @@
 
 
 
-					<p:column headerText="RID" width="5%">
-						<h:outputText value="#{oDto.rid}" />
+					<p:column headerText="RID" width="3%">
+						<h:outputText value="#{oVo.rid}" />
 					</p:column>
 
-					<p:column headerText="SCHOOL RID" width="5%">
-						<h:outputText value="#{oDto.schoolRid}" style="width:100%" />
+					<p:column headerText="SCHOOL" width="10%">
+						<h:outputText value="#{oVo.schoolName}" style="width:100%" />
 					</p:column>
-
-					<p:column headerText="PROGRAM RID" width="5%">
-						<h:outputText value="#{oDto.schoolRid}" style="width:100%" />
+ 
+ 					<p:column headerText="PROGRAM" width="10%">
+						<h:outputText value="#{oVo.programlName}" style="width:100%" />
 					</p:column>
-
+					
+					<p:column headerText="DEGREE" width="10%">
+						<h:outputText value="#{oVo.degreeName}" style="width:100%" />
+					</p:column>
+										
+								
 					<p:column headerText="YEAR" width="10%">
-						<h:outputText value="#{oDto.year}" style="width:100%" />
+						<h:outputText value="#{oVo.year}" style="width:100%" />
 					</p:column>
-
-
-					<p:column headerText="ADMISSIONS" width="5%">
-						<h:outputText value="#{oDto.admissions}" style="width:100%" />
+										
+						
+					<!-- ADMISSIONS -->
+					<p:column width="6%">
+						<f:facet name="header">
+							<h:outputText value="ADMISSIONS" style="width:100%" />
+						</f:facet>
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{oVo.admissions}"  style="width:100%" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{oVo.admissions}" style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
 					</p:column>
-
-
-					<p:column headerText="GRADUATIONS" width="5%">
-						<h:outputText value="#{oDto.graduations}" style="width:100%" />
+					
+					<!-- GRADUATIONS -->
+					<p:column width="7%">
+						<f:facet name="header">
+							<h:outputText value="GRADUATIONS" style="width:100%" />
+						</f:facet>
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{oVo.graduations}"  style="width:100%" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{oVo.graduations}" style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
 					</p:column>
-
-
+					
+					<!-- ATTRITIONS -->
+					<p:column width="7%">
+						<f:facet name="header">
+							<h:outputText value="ATTRITION A." style="width:100%" />
+						</f:facet>
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{oVo.attritionA}"  style="width:100%" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{oVo.attritionA}" style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					
+					<p:column width="7%">
+						<f:facet name="header">
+							<h:outputText value="ATTRITION P." style="width:100%" />
+						</f:facet>
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{oVo.attritionP}"  style="width:100%" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{oVo.attritionP}" style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+										
 					<p:column headerText="EDIT" width="7%">
 						<p:rowEditor />
 					</p:column>
@@ -124,31 +174,23 @@
 
 
 						<h:panelGrid id="lognPanelGrid" columns="8" cellpadding="2">
+							
+							<p:commandButton value="REFRESH" update=":selectSchoolForm:selectedSchool" actionListener="#{schoolAnnualDataController.refresh()}" />
 
 
+							<!-- SELECT SCHOOL DROP-DOWN -->
 							<p:selectOneMenu id="selectedSchool" value="#{schoolAnnualDataController.selectedSchoolRid}">
-								<p:ajax event="change" listener="#{schoolAnnualDataController.onSchoolChangedEvent}" update=":annualDataForm:schoolsAnnualDataTable"
-									process="selectSchoolForm" />
+								<p:ajax event="change" listener="#{schoolAnnualDataController.onSchoolChangedEvent}"
+									update=":annualDataForm:schoolsAnnualDataTable,:selectSchoolForm:showDialogBtn,:addSchoolAnnualDataForm" process="selectSchoolForm" />
+
 								<f:selectItem itemLabel="No Selection" itemValue="" noSelectionOption="true" />
 								<f:selectItems value="#{schoolAnnualDataController.allSchoolsDtoList}" var="schoolDto" itemValue="#{schoolDto.rid}" itemLabel="#{schoolDto.name}" />
 
 							</p:selectOneMenu>
 
-							<!-- LIGHTBOX  -->
-							<p:commandButton value="ADD RECORD" type="button" onclick="PF('dlg3').show();" disabled="#{schoolAnnualDataController.selectedSchool ne null}"  />
-							
-							<p:dialog id="lightbox" iframe="false" header="ADD RECORD" modal="true" widgetVar="dlg3" closable="true" appendTo="@(body)"
-								 showEffect="explode" hideEffect="explode" 
-							>
-								<h:form id="addSchoolAnnualDataForm">
-								 
-								<ui:include src="/pages/addSchoolAnnualData.xhtml" />
-								<p:commandButton value="CLOSE" type="button" onclick="PF('dlg3').hide()" />
-								<p:commandButton value="ADD" action="#{schoolAnnualDataController.addAction}"  update=":annualDataForm:schoolsAnnualDataTable"     oncomplete="PF('dlg3').hide()" />
-								 
-								 </h:form>
-							</p:dialog>
-
+							<!-- SHOW LIGHTBOX BUTTON -->
+							<p:commandButton id="showDialogBtn" value="ADD SCHOOL ANNUAL DATA" type="button" onclick="PF('dlg').show();"
+								disabled="#{ schoolAnnualDataController.selectedSchoolRid eq null   or schoolAnnualDataController.selectedSchoolRid eq ''}" />
 
 
 
@@ -163,6 +205,112 @@
 
 				</p:panel>
 
+
+				<!-- LIGHTBOX -->
+				<p:dialog id="addDataDialog" iframe="false" header="ADD SCHOOL ANNUAL DATA" modal="true" widgetVar="dlg" closable="true" appendTo="@(body)"
+					showEffect="bounce" hideEffect="bounce" width="80%" height="90%" showHeader="true" dynamic="true">
+
+
+					<h:form id="addSchoolAnnualDataForm">
+
+
+						<p:growl id="growl" sticky="false" showDetail="true" life="1500" />
+
+
+
+
+						<p:panelGrid columns="2" header="ADD SCHOOL ANNUAL DATA" style="width: 100%;">
+
+							<h:outputLabel for="schoolRid" value="SCHOOL RID:" style="text-align: right; display: block;" />
+							<h:outputText value="#{schoolAnnualDataController.newSchoolAnnualDataVo.schoolRid}" id="schoolRid" size="10" />
+
+
+
+							<h:outputLabel for="name" value="SCHOOL NAME:" style="text-align: right; display: block;" />
+							<h:outputText value="#{schoolAnnualDataController.newSchoolAnnualDataVo.schoolName}" id="schoolName" size="50" />
+							
+							
+							 
+							 
+							 
+							 
+							 
+							 
+							 
+							 
+							<h:outputLabel for="schoolAnnualData_selectedProgram" value="SCHOOL PROGRAM:" style="text-align: right; display: block;" />
+							<p:selectOneMenu id="schoolAnnualData_selectedProgram" value="#{schoolAnnualDataController.selectedProgramRid}" required="true">
+								<p:ajax event="change" listener="#{schoolAnnualDataController.onProgramChangedEvent}" update="schoolAnnualData_selectedDegree"   />
+								<f:selectItem itemValue="" itemLabel="No Selection" noSelectionOption="true" />
+								<f:selectItems value="#{schoolAnnualDataController.schoolProgramsList}" var="oDto" itemValue="#{oDto.rid}" itemLabel="#{oDto.name}" />
+								
+							</p:selectOneMenu>
+							
+							
+							<h:outputLabel for="schoolAnnualData_selectedDegree" value="SCHOOL DEGREE:" style="text-align: right; display: block;" />
+							<p:selectOneMenu id="schoolAnnualData_selectedDegree" value="#{schoolAnnualDataController.newSchoolAnnualDataVo.degreeRid}" 
+								required="false" disabled="#{ schoolAnnualDataController.showDegrees() eq false }"
+							>
+								<f:selectItems value="#{schoolAnnualDataController.getDegreeVoList()}" var="oDto" itemValue="#{oDto.rid}" itemLabel="#{oDto.name}" />
+							</p:selectOneMenu>
+
+
+
+
+
+
+
+
+
+							<h:outputLabel for="selectYear" value="YEAR:" style="text-align: right; display: block;" />
+							<p:selectOneMenu id="selectYear" value="#{schoolAnnualDataController.newSchoolAnnualDataVo.year}" required="true">
+
+								<f:selectItem itemValue="" itemLabel="No Selection" noSelectionOption="true" />
+
+								<f:selectItems value="#{schoolAnnualDataController.yearsList}" var="oDto" itemValue="#{oDto.year}" itemLabel="#{oDto.year}" />
+							</p:selectOneMenu>
+
+
+
+							<h:outputLabel for="addmissions" value="ADMISSIONS:" style="text-align: right; display: block;" required="false" />
+							<p:inputText id="addmissions" value="#{schoolAnnualDataController.newSchoolAnnualDataVo.admissions}" style="width:10%" />
+
+
+							<h:outputLabel for="graduations" value="GRADUATIONS:" style="text-align: right; display: block;" />
+							<p:inputText id="graduations" value="#{schoolAnnualDataController.newSchoolAnnualDataVo.graduations}" style="width:10%" required="false" />
+
+							<h:outputLabel for="attritionA" value="ATTRITION A.:" style="text-align: right; display: block;" />
+							<p:inputText id="attritionA" value="#{schoolAnnualDataController.newSchoolAnnualDataVo.attritionA}" style="width:10%" required="false" />
+
+							<h:outputLabel for="attritionP" value="ATTRITION P.:" style="text-align: right; display: block;" />
+							<p:inputText id="attritionP" value="#{schoolAnnualDataController.newSchoolAnnualDataVo.attritionP}" style="width:10%" required="false" />
+							
+							<f:facet name="footer" >
+								<p:commandButton value="CLOSE" type="button" onclick="PF('dlg').hide()" />
+								<p:commandButton value="ADD" update=":annualDataForm,:addSchoolAnnualDataForm" actionListener="#{schoolAnnualDataController.addAction}" oncomplete="handleLoginRequest(xhr, status, args)" />
+							</f:facet>
+
+
+						</p:panelGrid>
+
+
+
+
+					</h:form>
+				</p:dialog>
+
+				<script type="text/javascript">
+					function handleLoginRequest(xhr, status, args) {
+						if (args.validationFailed || !args.validated) {
+							PF('dlg').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('dlg').hide();
+							
+						}
+					}
+				</script>
 
 
 
@@ -182,15 +330,3 @@
 
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-

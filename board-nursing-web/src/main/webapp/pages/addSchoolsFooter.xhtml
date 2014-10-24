@@ -1,0 +1,51 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+
+
+	<center>
+
+
+		<p:panel header="ADD SCHOOL" style="width: 100%;">
+
+			<h:form id="addSchoolFooterForm">
+
+
+
+				<h:outputLabel for="name" value="Name: " />
+				<p:inputText value="#{schoolController.newSchoolDto.name}" id="name" size="40" />
+
+				<h:outputLabel for="disabled" value="DISABLED:" />
+				<h:selectOneMenu id="disabled"
+					value="#{schoolController.newSchoolDto.disabled}">
+					<f:selectItems value="#{schoolController.disabledList}" var="oDis"
+						itemLabel="#{oDis}" itemValue="#{oDis}" />
+				</h:selectOneMenu>
+
+
+
+				<h:outputLabel for="newPrograms" value="PROGRAMS:" />
+				<p:selectCheckboxMenu id="newPrograms"
+					value="#{schoolController.newSchoolDto.programRids}"
+					label="PROGRAMS" filter="false" panelStyle="width:250px">
+					<f:selectItems value="#{schoolController.allProgramsDtoList}"
+						var="programDto" itemLabel="#{programDto.name}"
+						itemValue="#{programDto.rid}" />
+				</p:selectCheckboxMenu>
+
+				<h:commandButton value="Add Item"
+					action="#{schoolController.addAction}" />
+
+
+
+			</h:form>
+		</p:panel>
+
+
+
+
+	</center>
+</ui:composition>

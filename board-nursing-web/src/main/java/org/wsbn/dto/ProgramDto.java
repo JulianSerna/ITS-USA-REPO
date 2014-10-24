@@ -11,6 +11,9 @@ public class ProgramDto implements iDto, Serializable
 {
 
 	private static final long	serialVersionUID	= 9003298511893551722L;
+	
+	// CONSTANTS
+	public static final Long GRADUATE_NURSING_PROGRAM_RID = 11L;
 
 	@Id
 	@GeneratedValue
@@ -131,12 +134,7 @@ public class ProgramDto implements iDto, Serializable
 	 * 
 	 * @see java.lang.Object#toString()
 	 */
-	@Override
-	public String toString()
-	{
-		return "ProgramDto [rid=" + rid + ", value=" + name + ", disabled=" + disabled + "]";
-	}
-
+	
 	/**
 	 * @return the printIndex
 	 */

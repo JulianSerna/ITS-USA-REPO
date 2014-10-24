@@ -51,7 +51,7 @@
 
 								<!-- TABLE -->
 								<p:dataTable id="schoolsTable" var="oSchoolDto" value="#{schoolController.allSchoolsDtoList}"  selection="#{schoolController.selectedSchool}" 
-									editable="true" style="margin-bottom:20px" scrollable="true" scrollHeight="90%"   rowKey="#{oSchoolDto.rid}"  selectionMode="single"	>
+									editable="true" style="margin-bottom:20px" scrollable="true" scrollHeight="90%"  rowKey="#{oSchoolDto.rid}"  selectionMode="single"	>
 									
 									
 									<f:facet name="header">
@@ -160,7 +160,7 @@
 			</p:layoutUnit>
 
 			<p:layoutUnit position="south" resizable="true" id="south" size="20%">
-				<ui:include src="/pages/editSchoolsFooter.xhtml" />
+				<ui:include src="/pages/addSchoolsFooter.xhtml" />
 			</p:layoutUnit>
 
 		</p:layout>
