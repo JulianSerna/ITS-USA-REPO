@@ -35,7 +35,7 @@
 				<p:growl id="msgs" showDetail="true" />
 
 				<p:contextMenu for="schoolsAnnualDataTable">
-					<p:menuitem value="Delete" update="schoolsAnnualDataTable" icon="ui-icon-close" action="#{schoolAnnualDataController.deleteSchool}" />
+					<p:menuitem value="Delete" update="schoolsAnnualDataTable" icon="ui-icon-close" action="#{schoolAnnualDataController.deleteAction()}" />
 				</p:contextMenu>
 
 
@@ -67,7 +67,7 @@
 
 
 
-					<p:column headerText="RID" width="3%">
+					<p:column headerText="RID" width="2%">
 						<h:outputText value="#{oVo.rid}" />
 					</p:column>
 
@@ -76,7 +76,7 @@
 					</p:column>
  
  					<p:column headerText="PROGRAM" width="10%">
-						<h:outputText value="#{oVo.programlName}" style="width:100%" />
+						<h:outputText value="#{oVo.programName}" style="width:100%" />
 					</p:column>
 					
 					<p:column headerText="DEGREE" width="10%">
@@ -84,7 +84,7 @@
 					</p:column>
 										
 								
-					<p:column headerText="YEAR" width="10%">
+					<p:column headerText="YEAR" width="3%">
 						<h:outputText value="#{oVo.year}" style="width:100%" />
 					</p:column>
 										
@@ -147,8 +147,22 @@
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
+					
+					<p:column width="7%">
+						<f:facet name="header">
+							<h:outputText value="NCLEX PASS %" style="width:100%" />
+						</f:facet>
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{oVo.nclexPassPercent}"  style="width:100%" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{oVo.nclexPassPercent}" style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
 										
-					<p:column headerText="EDIT" width="7%">
+					<p:column headerText="EDIT" width="3%">
 						<p:rowEditor />
 					</p:column>
 
@@ -231,8 +245,7 @@
 							
 							
 							 
-							 
-							 
+							 	 
 							 
 							 
 							 
@@ -241,7 +254,7 @@
 							<h:outputLabel for="schoolAnnualData_selectedProgram" value="SCHOOL PROGRAM:" style="text-align: right; display: block;" />
 							<p:selectOneMenu id="schoolAnnualData_selectedProgram" value="#{schoolAnnualDataController.selectedProgramRid}" required="true">
 								<p:ajax event="change" listener="#{schoolAnnualDataController.onProgramChangedEvent}" update="schoolAnnualData_selectedDegree"   />
-								<f:selectItem itemValue="" itemLabel="No Selection" noSelectionOption="true" />
+								<f:selectItem itemValue="-1" itemLabel="No Selection" noSelectionOption="false" />
 								<f:selectItems value="#{schoolAnnualDataController.schoolProgramsList}" var="oDto" itemValue="#{oDto.rid}" itemLabel="#{oDto.name}" />
 								
 							</p:selectOneMenu>
@@ -249,7 +262,7 @@
 							
 							<h:outputLabel for="schoolAnnualData_selectedDegree" value="SCHOOL DEGREE:" style="text-align: right; display: block;" />
 							<p:selectOneMenu id="schoolAnnualData_selectedDegree" value="#{schoolAnnualDataController.newSchoolAnnualDataVo.degreeRid}" 
-								required="false" disabled="#{ schoolAnnualDataController.showDegrees() eq false }"
+								required="true" disabled="#{ schoolAnnualDataController.showDegrees() eq false }"
 							>
 								<f:selectItems value="#{schoolAnnualDataController.getDegreeVoList()}" var="oDto" itemValue="#{oDto.rid}" itemLabel="#{oDto.name}" />
 							</p:selectOneMenu>
@@ -284,6 +297,11 @@
 
 							<h:outputLabel for="attritionP" value="ATTRITION P.:" style="text-align: right; display: block;" />
 							<p:inputText id="attritionP" value="#{schoolAnnualDataController.newSchoolAnnualDataVo.attritionP}" style="width:10%" required="false" />
+							
+							<h:outputLabel for="nclexPassPercent" value="NCLEX PASS %:" style="text-align: right; display: block;" />
+							<p:inputText id="nclexPassPercent" value="#{schoolAnnualDataController.newSchoolAnnualDataVo.nclexPassPercent}" style="width:10%" required="false" />
+							
+							
 							
 							<f:facet name="footer" >
 								<p:commandButton value="CLOSE" type="button" onclick="PF('dlg').hide()" />

@@ -156,6 +156,9 @@ public class SchoolAnnualDataController implements iController, Serializable
 			this.mNewSchoolAnnualDataVo = new SchoolAnnualDataVo();
 			this.mNewSchoolAnnualDataVo.setSchoolRid(this.mSelectedSchoolDto.getRid().toString());
 			this.mNewSchoolAnnualDataVo.setSchoolName(this.mSelectedSchoolDto.getName().toString());
+			
+			// set flags
+			this.bShowDegrees = false;
 				
 		}
 		
@@ -172,7 +175,13 @@ public class SchoolAnnualDataController implements iController, Serializable
 		// get the program dto
 		ProgramDto oProgramDto = this.getProgramDto(Long.parseLong(pProgramRid));
 		
-		if(  oProgramDto.getRid().equals(ProgramDto.GRADUATE_NURSING_PROGRAM_RID)  )
+		if(oProgramDto == null)
+		{
+			// make sure you set a flag to disable the degrees drop-down box
+			this.bShowDegrees = false;
+			
+		}
+		else if(  oProgramDto.getName().equals(ProgramDto.GRADUATE_NURSING_PROGRAM_NAME)  )
 		{
 			// make sure you set a flag to enable the degrees drop-down box
 			this.bShowDegrees = true;
@@ -350,35 +359,65 @@ public class SchoolAnnualDataController implements iController, Serializable
 		
 		RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message = null;
-        boolean validated = true;
+        boolean bValidated = true;
         
            
        
-		SchoolAnnualDataDto oDto = new SchoolAnnualDataDto();
-		oDto.setSchoolRid(Long.parseLong(this.mNewSchoolAnnualDataVo.getSchoolRid()));
-		oDto.setProgramRid(Long.parseLong(this.mNewSchoolAnnualDataVo.getProgramRid()));
-		oDto.setYear(Integer.parseInt(this.mNewSchoolAnnualDataVo.getYear()));
-		if(mNewSchoolAnnualDataVo.getAdmissions() == null  || mNewSchoolAnnualDataVo.getAdmissions() == "") 
+		SchoolAnnualDataDto oNewAnnualDataDto = new SchoolAnnualDataDto();
+		oNewAnnualDataDto.setSchoolRid(Long.parseLong(this.mNewSchoolAnnualDataVo.getSchoolRid()));
+		oNewAnnualDataDto.setProgramRid(Long.parseLong(this.mNewSchoolAnnualDataVo.getProgramRid()));
+		oNewAnnualDataDto.setDegreeRid(     (this.mNewSchoolAnnualDataVo.getDegreeRid() == null ? 1L  :  Long.parseLong(this.mNewSchoolAnnualDataVo.getDegreeRid() )     ) );	
+		
+		// if graduate nursing program is selected 
+		ProgramDto oProgramDto = this.getProgramDto(oNewAnnualDataDto.getProgramRid());
+		if ( oProgramDto.getName().equalsIgnoreCase(ProgramDto.GRADUATE_NURSING_PROGRAM_NAME))
 		{
-			oDto.setAdmissions(0);
+			// a degree must be selected
+			if (oNewAnnualDataDto.getDegreeRid().equals(DegreeDto.NA_DEGREE_RID))
+			{
+				// a validation has failed
+				bValidated = false;
+				message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Record Not Added", "Degree cannot be 'N/A'  ");
+				
+			}
+		}
+		
+				
+		
+		
+		oNewAnnualDataDto.setYear(Integer.parseInt(this.mNewSchoolAnnualDataVo.getYear()));
+		
+		if(mNewSchoolAnnualDataVo.getNclexPassPercent() == null  || mNewSchoolAnnualDataVo.getNclexPassPercent() == "") 
+		{
+			oNewAnnualDataDto.setNclexPassPercent(0.0);
 		}
 		else
 		{
-			oDto.setAdmissions(Integer.parseInt(this.mNewSchoolAnnualDataVo.getAdmissions()));
+			oNewAnnualDataDto.setNclexPassPercent(Double.valueOf(this.mNewSchoolAnnualDataVo.getNclexPassPercent()));
+		}
+		
+		
+		if(mNewSchoolAnnualDataVo.getAdmissions() == null  || mNewSchoolAnnualDataVo.getAdmissions() == "") 
+		{
+			oNewAnnualDataDto.setAdmissions(0);
+		}
+		else
+		{
+			oNewAnnualDataDto.setAdmissions(Integer.parseInt(this.mNewSchoolAnnualDataVo.getAdmissions()));
 		}
 		
 		if(mNewSchoolAnnualDataVo.getGraduations() == null  || mNewSchoolAnnualDataVo.getGraduations() == "") 
 		{
-			oDto.setGraduations(0);
+			oNewAnnualDataDto.setGraduations(0);
 		}
 		else
 		{
-			oDto.setGraduations(Integer.parseInt(this.mNewSchoolAnnualDataVo.getGraduations()));
+			oNewAnnualDataDto.setGraduations(Integer.parseInt(this.mNewSchoolAnnualDataVo.getGraduations()));
 		}
 		
 		
 		// add school annual data
-		oDto = this.schoolService.addSchoolAnnualData(oDto);
+		oNewAnnualDataDto = this.schoolService.addSchoolAnnualData(oNewAnnualDataDto);
 		
 		
 		// load school's annual data
@@ -391,11 +430,15 @@ public class SchoolAnnualDataController implements iController, Serializable
 		this.mNewSchoolAnnualDataVo.setSchoolName(this.mSelectedSchoolDto.getName().toString());
 		
 		
-		 message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Record Added", oDto.getRid().toString());
-         
-         
+		if(bValidated == true)
+		{
+			message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Record Added", oNewAnnualDataDto.getRid().toString());
+		}
+	
         FacesContext.getCurrentInstance().addMessage(null, message);
-        context.addCallbackParam("validated", validated);
+        context.addCallbackParam("validated", bValidated);
+        
+        this.bShowDegrees = false;
 					
 		
 
@@ -525,7 +568,9 @@ public class SchoolAnnualDataController implements iController, Serializable
 			
 			oEditDto.setSchoolRid(Long.parseLong(oEditVo.getSchoolRid()));
 			oEditDto.setProgramRid(Long.parseLong(oEditVo.getProgramRid()));
+			oEditDto.setDegreeRid(Long.parseLong(oEditVo.getDegreeRid()));
 			oEditDto.setYear(Integer.parseInt(oEditVo.getYear()));
+			
 			if(oEditVo.getAdmissions() == null || oEditVo.getAdmissions() == "")
 			{
 				oEditDto.setAdmissions(0);
@@ -543,6 +588,16 @@ public class SchoolAnnualDataController implements iController, Serializable
 			{
 				oEditDto.setGraduations(Integer.parseInt(oEditVo.getGraduations()));
 			}
+						
+			if(oEditVo.getNclexPassPercent() == null || oEditVo.getNclexPassPercent() == "")
+			{
+				oEditDto.setNclexPassPercent(0.0);
+			}
+			else
+			{
+				oEditDto.setNclexPassPercent(Double.valueOf(oEditVo.getNclexPassPercent()));
+			}
+			
 			
 			// save dto
 			this.schoolService.updateSchoolAnnualData(oEditDto);
@@ -603,7 +658,7 @@ public class SchoolAnnualDataController implements iController, Serializable
 		
 		for(ProgramDto oDto : this.mAllProgramsDtoList)
 		{
-			if (oDto.getRid() == pProgramRid)
+			if (oDto.getRid().equals(pProgramRid))
 			{
 				oResponse = oDto;
 				break;

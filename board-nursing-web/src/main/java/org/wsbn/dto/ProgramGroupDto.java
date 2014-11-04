@@ -5,12 +5,15 @@ import java.util.List;
 
 import javax.persistence.*;
 
+/**
+ * @author JULIAN
+ *
+ */
 @Entity
-@Table(name = "PROGRAM_GROUPS")
+@Table(name = "PROGRAM_GROUPS_LK")
 public class ProgramGroupDto implements iDto, Serializable
 {
-
-	
+		
 
 	/**
 	 * 
@@ -34,10 +37,18 @@ public class ProgramGroupDto implements iDto, Serializable
 	private Boolean				disabled			= false;
 	
 	
+	@Column(name = "NCLEX")
+	private Boolean				nclex			= false;
+	
+	
 	// CONSTRUCTOR(S)
-		public ProgramGroupDto() 
+	public ProgramGroupDto() 
 	{
-
+		
+	}
+	public ProgramGroupDto(Long pRid) 
+	{
+		this.rid = pRid;
 	}
 
 	// SETTERS/GETTERS
@@ -73,6 +84,23 @@ public class ProgramGroupDto implements iDto, Serializable
 	{
 		this.disabled = pValue;
 		
+	}
+	
+	
+	/**
+	 * @return the nclex
+	 */
+	public Boolean getNclex()
+	{
+		return nclex;
+	}
+
+	/**
+	 * @param nclex the nclex to set
+	 */
+	public void setNclex(Boolean nclex)
+	{
+		this.nclex = nclex;
 	}
 
 	/* (non-Javadoc)

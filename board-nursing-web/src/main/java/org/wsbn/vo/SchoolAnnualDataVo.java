@@ -21,6 +21,7 @@ public class SchoolAnnualDataVo implements Serializable
 	private String graduations;
 	private String attritionA;
 	private String attritionP;
+	private String nclexPassPercent;
 	
 	// transient
 	private String[] programRids;
@@ -203,6 +204,20 @@ public class SchoolAnnualDataVo implements Serializable
 	public void setDegreeName(String degreeName)
 	{
 		this.degreeName = degreeName;
+	}
+	/**
+	 * @return the nclexPassPercent
+	 */
+	public String getNclexPassPercent()
+	{
+		return nclexPassPercent;
+	}
+	/**
+	 * @param nclexPassPercent the nclexPassPercent to set
+	 */
+	public void setNclexPassPercent(String nclexPassPercent)
+	{
+		this.nclexPassPercent = nclexPassPercent;
 	}
 
 	

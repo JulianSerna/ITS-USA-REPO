@@ -114,7 +114,7 @@
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-api</artifactId>
 			<version>2.2.5</version>
-			 
+
 		</dependency>
 
 
@@ -122,7 +122,7 @@
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-impl</artifactId>
 			<version>2.2.5</version>
-		 
+
 		</dependency>
 
 		<!-- PRIME FACES -->
@@ -132,7 +132,7 @@
 			<version>1.0.10</version>
 		</dependency>
 
-		
+
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
@@ -140,8 +140,14 @@
 			<scope>provided</scope>
 		</dependency>
 
-		
-		
+		<!-- POI -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.9</version>
+		</dependency>
+
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>

@@ -13,7 +13,8 @@ public class ProgramDto implements iDto, Serializable
 	private static final long	serialVersionUID	= 9003298511893551722L;
 	
 	// CONSTANTS
-	public static final Long GRADUATE_NURSING_PROGRAM_RID = 11L;
+	public static final String GRADUATE_NURSING_PROGRAM_NAME = "Graduate Nursing Program";
+	
 
 	@Id
 	@GeneratedValue

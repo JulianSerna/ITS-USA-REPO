@@ -1,6 +1,7 @@
 package org.wsbn.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,6 +51,9 @@ public class SchoolAnnualDataDto implements Serializable
 
 	@Column(name = "ATTRITION_PERSONAL")
 	private Integer				attritionP;
+	
+	@Column(name = "NCLEX_PASS_PERCENT")
+	private Double nclexPassPercent;
 
 	
 	
@@ -63,6 +67,7 @@ public class SchoolAnnualDataDto implements Serializable
 		this.rid = pRid;
 		this.attritionA = 0;
 		this.attritionP = 0;
+		this.nclexPassPercent = (double) 0;
 	}
 
 	/**
@@ -217,6 +222,26 @@ public class SchoolAnnualDataDto implements Serializable
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	/**
+	 * @return the nclexPassPercent
+	 */
+	public Double getNclexPassPercent()
+	{
+		return nclexPassPercent;
+	}
+	/**
+	 * @param nclexPassPercent the nclexPassPercent to set
+	 */
+	public void setNclexPassPercent(Double nclexPassPercent)
+	{
+		this.nclexPassPercent = nclexPassPercent;
+	}
 	// ============== METHODS ==================
 	public SchoolAnnualDataVo getVo()
 	{
@@ -230,10 +255,18 @@ public class SchoolAnnualDataDto implements Serializable
 		oResponse.setGraduations(this.graduations.toString());
 		oResponse.setAttritionA(this.attritionA.toString());
 		oResponse.setAttritionP(this.attritionP.toString());
+		oResponse.setNclexPassPercent(this.nclexPassPercent.toString());
 				 
 		
 		return oResponse;
 	}
+	
+	
+	
+	
+	
+	
+	
 	
 	/*
 	 * (non-Javadoc)
@@ -268,5 +301,17 @@ public class SchoolAnnualDataDto implements Serializable
 			if (!rid.equals(other.rid)) return false;
 		return true;
 	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString()
+	{
+		return "SchoolAnnualDataDto [rid=" + rid + ", schoolRid=" + schoolRid + ", programRid=" + programRid
+				+ ", degreeRid=" + degreeRid + ", year=" + year + ", admissions=" + admissions + ", graduations="
+				+ graduations + ", attritionA=" + attritionA + ", attritionP=" + attritionP + "]";
+	}
+	
+	
 
 }

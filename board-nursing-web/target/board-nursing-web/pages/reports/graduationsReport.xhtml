@@ -1,0 +1,190 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>BOARD OF NURSING</title>
+	<ui:debug />
+</h:head>
+
+<h:body onload="statusDialog.hide();">
+
+	<p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
+
+
+		<!-- NORTH LAYOUT -->
+		<p:layoutUnit position="north" size="15%" id="north">
+			<ui:include src="/templates/header.xhtml" />
+		</p:layoutUnit>
+
+
+		<!-- CENTER LAYOUT -->
+		<p:layoutUnit styleClass="layoutUnitCenter" position="center" size="60%">
+			<ui:include src="/templates/menuBar.xhtml" />
+
+			<!-- LIST OF SCHOOLS -->
+
+			<h:form id="annualDataForm">
+
+
+				<f:event type="preRenderView" listener="#{annualDataReportController.init('GRADUATIONS')}" />
+
+
+
+				<!-- TABLE -->
+				<p:dataTable id="schoolsAnnualDataTable" var="oVo" value="#{annualDataReportController.getSchoolsAnnualDataVoList()}" editable="false"
+					style="margin-bottom:20px" scrollable="true" scrollHeight="65%" rowKey="#{oVo.schoolRid}" selectionMode="single">
+
+
+					<f:facet name="header">
+					     Wyoming PN Program Graduations
+					     <h:commandLink>
+							<p:graphicImage url="/resources/images/excel.png" />
+							<p:dataExporter type="xls" target="schoolsAnnualDataTable" fileName="PN_Program_Admissions" />
+						</h:commandLink>
+					</f:facet>
+
+
+
+					<p:column headerText="SCHOOL" width="10%">
+						<h:outputText value="#{oVo.schoolName}" style="width:100%" />
+					</p:column>
+
+					<p:column headerText="PROGRAM" width="10%">
+						<h:outputText value="#{oVo.programName}" style="width:100%" />
+					</p:column>
+
+
+					<p:column headerText="2008" width="3%"  style="text-align: right;">
+						<h:outputText value="#{oVo.y2008}" style="width:100%; text-align:right;"  />
+					</p:column>
+
+
+					<p:column headerText="2009" width="3%"  style="text-align: right;">
+						<h:outputText value="#{oVo.y2009}" style="width:100%; text-align:right;" />
+					</p:column>
+
+
+					<p:column headerText="2010" width="3%"  style="text-align: right;"  >
+						<h:outputText value="#{oVo.y2010}" style="width:100%; text-align:right;" />
+					</p:column>
+
+
+					<p:column headerText="2011" width="3%"  style="text-align: right;">
+						<h:outputText value="#{oVo.y2011}" style="width:100%; text-align:right;" />
+					</p:column>
+
+  
+					<p:column headerText="2012" width="3%"  style="text-align: right;" >
+						<h:outputText value="#{oVo.y2012}" style="width:100%; text-align:right;" />
+					</p:column>
+
+
+					<p:column headerText="2013" width="3%"  style="text-align: right;">
+						<h:outputText value="#{oVo.y2013}" style="width:100%; text-align:right;" />
+					</p:column>
+
+					<p:column headerText="2014" width="3%" style="text-align: right;" >
+						<h:outputText value="#{oVo.y2014}" style="width:100%; text-align:right;" />
+					</p:column>
+
+					<p:column headerText="2015" width="3%"  style="text-align: right;">
+						<h:outputText value="#{oVo.y2015}" style="width:100%; text-align:right;" />
+					</p:column>
+									
+					 
+				
+				</p:dataTable>
+
+			</h:form>
+
+			<h:form id="rnProgramAdmissionForm">
+
+				<!-- TABLE -->
+				<p:dataTable id="rnProgramAdmissionTbl" var="oVo" value="#{annualDataReportController.getRcSchoolsAnnualDataVoList()}" editable="false"
+					style="margin-bottom:20px" scrollable="true" scrollHeight="60%" rowKey="#{oVo.schoolRid}" selectionMode="single">
+
+
+					<f:facet name="header">
+					     Wyoming RN Program Graduations
+					     <h:commandLink>
+							<p:graphicImage url="/resources/images/excel.png" />
+							<p:dataExporter type="xls" target="schoolsAnnualDataTable" fileName="PN_Program_Admissions" />
+						</h:commandLink>
+					</f:facet>
+
+
+
+					<p:column headerText="SCHOOL" width="10%">
+						<h:outputText value="#{oVo.schoolName}" style="width:100%" />
+					</p:column>
+
+					<p:column headerText="PROGRAM" width="10%">
+						<h:outputText value="#{oVo.programName}" style="width:100%" />
+					</p:column>
+
+
+					<p:column headerText="2008" width="3%" style="text-align: right;">
+						<h:outputText value="#{oVo.y2008}" style="width:100%" />
+					</p:column>
+
+
+					<p:column headerText="2009" width="3%"  style="text-align: right;">
+						<h:outputText value="#{oVo.y2009}" style="width:100%" />
+					</p:column>
+
+
+					<p:column headerText="2010" width="3%"  style="text-align: right;">
+						<h:outputText value="#{oVo.y2010}" style="width:100%" />
+					</p:column>
+
+
+					<p:column headerText="2011" width="3%"  style="text-align: right;">
+						<h:outputText value="#{oVo.y2011}" style="width:100%" />
+					</p:column>
+
+
+					<p:column headerText="2012" width="3%"  style="text-align: right;">
+						<h:outputText value="#{oVo.y2012}" style="width:100%" />
+					</p:column>
+
+
+					<p:column headerText="2013" width="3%"  style="text-align: right;">
+						<h:outputText value="#{oVo.y2013}" style="width:100%" />
+					</p:column>
+
+					<p:column headerText="2014" width="3%"  style="text-align: right;">
+						<h:outputText value="#{oVo.y2014}" style="width:100%" />
+					</p:column>
+
+					<p:column headerText="2015" width="3%"  style="text-align: right;">
+						<h:outputText value="#{oVo.y2015}" style="width:100%" />
+					</p:column>
+					 
+
+				</p:dataTable>
+
+			</h:form>
+
+			<!-- END TABLE -->
+
+
+
+		</p:layoutUnit>
+
+
+
+
+
+	</p:layout>
+
+
+
+
+
+
+</h:body>
+
+
+</html>

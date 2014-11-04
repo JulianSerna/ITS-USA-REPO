@@ -9,17 +9,23 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import org.wsbn.dao.DegreesDao;
+import org.wsbn.dao.NclexAnnualDataDao;
+import org.wsbn.dao.ProgramGroupsDao;
 import org.wsbn.dao.ProgramsDao;
 import org.wsbn.dao.SchoolAnnualDataDao;
 import org.wsbn.dao.SchoolsDao;
 import org.wsbn.dao.SchoolsProgramsDao;
 import org.wsbn.dao.YearsDao;
 import org.wsbn.dto.DegreeDto;
+import org.wsbn.dto.NclexAnnualDataDto;
 import org.wsbn.dto.ProgramDto;
+import org.wsbn.dto.ProgramGroupDto;
 import org.wsbn.dto.SchoolAnnualDataDto;
 import org.wsbn.dto.SchoolDto;
 import org.wsbn.dto.SchoolProgramDto;
 import org.wsbn.dto.YearDto;
+import org.wsbn.dto.reports.SchoolAnnualDataReport;
+import org.wsbn.dto.reports.SchoolAnnualDataReport.eData;
 
 
 @ManagedBean(name="schoolService")
@@ -30,12 +36,15 @@ public class SchoolService implements Serializable
 	private static final long	serialVersionUID	= 1L;
 	
 	// COLLABORATORS
-	SchoolsDao mSchoolsDao; 
-	SchoolsProgramsDao mSchoolsProgramsDao;
-	SchoolAnnualDataDao mSchoolAnnualDataDao;
-	ProgramsDao mProgramsDao;
-	YearsDao mYearsDao;
+	private SchoolsDao mSchoolsDao; 
+	private SchoolsProgramsDao mSchoolsProgramsDao;
+	private SchoolAnnualDataDao mSchoolAnnualDataDao;
+	private NclexAnnualDataDao mNclexAnnualDataDao;
+	private ProgramsDao mProgramsDao;
+	private YearsDao mYearsDao;
 	DegreesDao mDegreesDao;
+	private ProgramGroupsDao mProgramGroupsDao;
+	
 	
 	
 	// STATE
@@ -47,6 +56,7 @@ public class SchoolService implements Serializable
 	private List<SchoolProgramDto> allSchoolProgramList;
 	private List<YearDto> mYearsList;
 	private List<DegreeDto> mDegreeDtoList;
+	private List<ProgramGroupDto>    nclexProgramGroupsList;
 	
 		
 	
@@ -70,22 +80,27 @@ public class SchoolService implements Serializable
 			 if(this.mProgramsDao == null)  this.mProgramsDao = new ProgramsDao();
 			 if(this.mSchoolsProgramsDao == null) this.mSchoolsProgramsDao = new SchoolsProgramsDao();
 			 if(this.mSchoolAnnualDataDao == null) this.mSchoolAnnualDataDao = new SchoolAnnualDataDao();
+			 if(this.mNclexAnnualDataDao == null) this.mNclexAnnualDataDao = new NclexAnnualDataDao();
 			 if(this.mYearsDao == null) this.mYearsDao = new YearsDao();
 			 if(this.mDegreesDao == null) this.mDegreesDao = new DegreesDao();
+			 if(this.mProgramGroupsDao == null) this.mProgramGroupsDao = new ProgramGroupsDao();
 			 
 			 // Lists
 			 this.allSchoolsList = null;
 			 this.allProgramsList = null;
 			 this.allSchoolProgramList = null;
 			 this.mDegreeDtoList = null;
+			 this.nclexProgramGroupsList = null;
 			 
 			 this.allSchoolsList = this.mSchoolsDao.findAll();
 			 this.allProgramsList = this.mProgramsDao.findAll();
 			 this.allSchoolProgramList = this.mSchoolsProgramsDao.findAll();
 			 this.mYearsList = this.mYearsDao.findAll();
 			 this.mDegreeDtoList = this.mDegreesDao.findAll();
-			 
 			 this.allSchoolsList =  this.buildFullSchoolList();
+			 this.nclexProgramGroupsList = this.mProgramGroupsDao.findNclex();
+			 
+			 
 		 }
 		 catch(Exception e)
 		 {
@@ -94,13 +109,7 @@ public class SchoolService implements Serializable
 		 
        
     }
-	public List<DegreeDto> getDegreeDtoList()
-	{
-		return this.mDegreeDtoList;
-		
-	}
-	 
-	 public  List<YearDto> getYearsList()
+	public  List<YearDto> getYearsList()
 	{
 		return this.mYearsList;
 	}
@@ -113,6 +122,33 @@ public class SchoolService implements Serializable
 	public List<SchoolAnnualDataDto> getSchoolAnnualData(Long schoolId)
 	{
 		return this.mSchoolAnnualDataDao.findBySchoolRid(schoolId);
+	}
+	
+	public List<SchoolAnnualDataReport> getSchoolAnnualDataByPnProgramGroup(eData pValue)
+	{
+		return this.mSchoolAnnualDataDao.findByPnProgramGroup(pValue);
+	}
+	
+	public List<SchoolAnnualDataReport> getSchoolAnnualDataByAdnBsnProgramGroups(eData pValue)
+	{
+		return this.mSchoolAnnualDataDao.findByAdnBsnProgramGroups(pValue);
+	}
+	
+	public List<SchoolAnnualDataReport> getSchoolAnnualDataByGraduatePrograms(eData pValue)
+	{
+		return this.mSchoolAnnualDataDao.findByGraduatePrograms(pValue);
+	}
+	
+	public List<DegreeDto> getDegreeDtoList()
+	{
+		return this.mDegreeDtoList;
+		
+	}
+		
+	
+	public List<NclexAnnualDataDto> getNclexAnnualData(Long schoolId)
+	{
+		return this.mNclexAnnualDataDao.findBySchoolRid(schoolId);
 	}
 	public List<SchoolAnnualDataDto> getAllSchoolsAnnualData()
 	{
@@ -166,6 +202,23 @@ public class SchoolService implements Serializable
 		
 	}
 	
+	public NclexAnnualDataDto  addNclexAnnualData(NclexAnnualDataDto pSchoolDto)
+	{
+		// response
+		NclexAnnualDataDto oResponse;
+		
+		// save the school dto
+		oResponse = this.mNclexAnnualDataDao.addEntity(pSchoolDto);
+				
+				
+		// refresh just updated list ...
+		this.mSchoolAnnualDataDao.findBySchoolRid(pSchoolDto.getSchoolRid());
+		
+		
+		return oResponse;
+		
+	}
+	
 	public void  updateSchoolAnnualData(SchoolAnnualDataDto pSchoolDto)
 	{
 		
@@ -179,15 +232,18 @@ public class SchoolService implements Serializable
 		
 	}
 	
-	public void  deleteSchoolAnnualData(SchoolAnnualDataDto pSchoolDto)
+	
+	public void  updateNclexAnnualData(NclexAnnualDataDto pSchoolDto)
 	{
 		
 		
 		// save the school dto
-		this.mSchoolAnnualDataDao.deleteEntity(pSchoolDto);
+		this.mNclexAnnualDataDao.saveEntity(pSchoolDto);
 				
 				
-				
+		// refresh just updated list ...
+		this.mNclexAnnualDataDao.findBySchoolRid(pSchoolDto.getSchoolRid());
+		
 	}
 	
 	public void  deleteFullSchoolDto(SchoolDto pSchoolDto)
@@ -202,11 +258,29 @@ public class SchoolService implements Serializable
 		// refresh just updated list
 		this.refreshAllLists();
 		
+	}
+	
+	
+	public void  deleteSchoolAnnualData(SchoolAnnualDataDto pSchoolDto)
+	{
 		
 		
+		// save the school dto
+		this.mSchoolAnnualDataDao.deleteEntity(pSchoolDto);
+				
+				
+				
+	}
+	
+	public void  deleteNclexAnnualData(NclexAnnualDataDto pSchoolDto)
+	{
 		
-							
 		
+		// save the school dto
+		this.mNclexAnnualDataDao.deleteEntity(pSchoolDto);
+				
+				
+				
 	}
 	
 	private List<SchoolDto> buildFullSchoolList()
@@ -256,6 +330,13 @@ public class SchoolService implements Serializable
 	{
 		
 		return this.allProgramsList;
+		
+	}
+	
+	public List<ProgramGroupDto> getNclexProgramGroupsList()
+	{
+		
+		return this.nclexProgramGroupsList;
 		
 	}
 	

@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>BOARD OF NURSING</title>
+
+</h:head>
+
+
+
+<h:body>
+
+<center>
+
+	<h:form id="addSchoolAnnualDataForm">
+
+
+		
+
+			<p:panelGrid columns="2" header="ADD RECORD" style="width: 100%;">
+
+
+				<h:outputLabel for="schoolRid" value="School RID:" />
+				<h:outputText value="#{schoolAnnualDataController.newSchoolDto.schoolRid}" id="schoolRid" size="10" />
+
+				<h:outputLabel for="name" value="School:" />
+				<h:outputText value="#{schoolAnnualDataController.getNewSchoolName()}" id="schoolName" size="50" />
+
+			</p:panelGrid>
+		 
+			<p:commandButton value="CLOSE" type="button" onclick="PF('dlg3').hide()" />
+			<p:commandButton value="ADD" action="#{schoolAnnualDataController.addAction}" oncomplete="PF('dlg4').hide()" />
+
+	</h:form>
+</center>
+
+</h:body>
+
+
+</html>
+
+
+
+

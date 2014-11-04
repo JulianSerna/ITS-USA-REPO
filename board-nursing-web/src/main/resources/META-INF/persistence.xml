@@ -17,6 +17,11 @@
 	<class>org.wsbn.dto.SchoolAnnualDataDto</class>
 	<class>org.wsbn.dto.YearDto</class>
 	<class>org.wsbn.dto.DegreeDto</class>
+	<class>org.wsbn.dto.NclexAnnualDataDto</class>
+	 
+	
+	
+	
 	
 	
 	

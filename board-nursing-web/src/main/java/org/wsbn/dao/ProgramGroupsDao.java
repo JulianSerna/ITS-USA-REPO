@@ -218,6 +218,38 @@ public class ProgramGroupsDao implements Serializable
 		
 	}
 	
+	public synchronized List<ProgramGroupDto> findNclex()
+	{
+		// get entity manager
+		EntityManager oEm = PersistenceManager.createEntityManager();
+		List<ProgramGroupDto> oResponse = null;
+				
+		try
+		{
+			
+			Query query = oEm.createQuery("SELECT e FROM ProgramGroupDto e WHERE e.nclex = :pNclex  ORDER BY e.printIndex");
+			query.setParameter("pNclex", true);
+			oResponse = query.getResultList();			 	
+			
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+		
+		
+		finally
+		{
+			oEm.close();
+			
+		}
+		
+		return oResponse;
+				
+		
+	}
+	
+	
 	
 	public synchronized ProgramGroupDto find(ProgramGroupDto pDto)
 	{

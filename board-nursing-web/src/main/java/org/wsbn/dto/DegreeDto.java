@@ -11,7 +11,11 @@ import org.wsbn.vo.DegreeVo;
 public class DegreeDto implements iDto, Serializable
 {
 
+	// CONSTANTS
 	private static final long	serialVersionUID	= 1L;
+	public static final Long NA_DEGREE_RID = 1L;
+	
+	
 
 	@Id
 	@GeneratedValue

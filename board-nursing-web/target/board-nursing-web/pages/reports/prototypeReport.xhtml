@@ -1,0 +1,82 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>BOARD OF NURSING</title>
+
+</h:head>
+
+<h:body>
+
+	<p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
+
+		<p:layoutUnit position="north" size="15%" id="north">
+			<ui:include src="/templates/header.xhtml" />
+		</p:layoutUnit>
+
+
+
+		<p:layoutUnit styleClass="layoutUnitCenter" position="center" size="85%">
+			<ui:include src="/templates/menuBar.xhtml" />
+
+
+			<!-- FORM -->
+			<h:form id="stateAdmissionReport">
+
+
+				<!-- INIT THE CONTROLLER -->
+				 
+
+
+
+
+				<p:dataTable id="prototypeTbl"  var="player" value="#{dtGroupView.players}" style="margin-top:40px">
+					<f:facet name="header">
+            			Dynamic Columns
+            			<h:commandLink> 
+			                <p:graphicImage url="/resources/images/excel.png"  />
+			                <p:dataExporter type="xls" target="prototypeTbl" fileName="ProtoTypeReport" />
+			            </h:commandLink>
+        			</f:facet>
+
+					<p:columnGroup type="header">
+						<p:row>
+							<p:column rowspan="2" headerText="Player" />
+							<p:column colspan="#{dtGroupView.yearCount}" headerText="Goals" />
+						</p:row>
+						<p:row>
+							<ui:repeat value="#{dtGroupView.years}" var="year">
+								<p:column headerText="#{year}" />
+							</ui:repeat>
+						</p:row>
+					</p:columnGroup>
+
+					<p:column>
+						<h:outputText value="#{player.name}" />
+					</p:column>
+
+					<p:columns value="#{dtGroupView.years}" var="year">
+						<h:outputText value="#{player.getGoals(year)}" />
+					</p:columns>
+
+					<f:facet name="footer">
+            Data between 2010-2014
+        </f:facet>
+				</p:dataTable>
+
+
+
+			</h:form>
+
+
+		</p:layoutUnit>
+	</p:layout>
+
+
+</h:body>
+
+
+</html>

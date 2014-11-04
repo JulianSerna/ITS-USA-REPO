@@ -1,0 +1,263 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>BOARD OF NURSING</title>
+	<ui:debug />
+</h:head>
+
+<h:body onload="statusDialog.hide();">
+
+	<p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
+
+
+		<!-- NORTH LAYOUT -->
+		<p:layoutUnit position="north" size="15%" id="north">
+			<ui:include src="header.xhtml" />
+		</p:layoutUnit>
+
+
+		<!-- WEST LAYOUT 
+			<p:layoutUnit position="west" size="15%" id="west-layout" collapsible="true" header="ADD RECORD" collapsed="true">
+				<ui:include src="/pages/addSchoolAnnualData.xhtml" />
+			</p:layoutUnit>
+			-->
+		<!-- CENTER LAYOUT -->
+		<p:layoutUnit styleClass="layoutUnitCenter" position="center" size="60%">
+			<ui:include src="menuBar.xhtml" />
+
+			<!-- LIST OF SCHOOLS -->
+
+			<h:form id="annualDataForm">
+
+				<p:growl id="msgs" showDetail="true" />
+
+				<p:contextMenu for="schoolsAnnualDataTable">
+					<p:menuitem value="Delete" update="schoolsAnnualDataTable" icon="ui-icon-close" action="#{nclexAnnualDataController.deleteAction()}" />
+				</p:contextMenu>
+
+
+				<f:event type="preRenderView" listener="#{nclexAnnualDataController.init}" />
+
+
+
+
+
+
+
+
+				<!-- TABLE -->
+				<p:dataTable id="schoolsAnnualDataTable" var="oVo" value="#{nclexAnnualDataController.getNclexAnnualDataVoList()}"
+					selection="#{nclexAnnualDataController.selectedNclexAnnualDataVo}" editable="true" style="margin-bottom:20px" scrollable="true" scrollHeight="100%"
+					rowKey="#{oVo.rid}" selectionMode="single">
+
+
+					<f:facet name="header">
+					     	EDIT NCLEX ANNUAL DATA
+					 </f:facet>
+
+					<p:ajax event="rowSelect" listener="#{nclexAnnualDataController.onRowSelect}" />
+					<p:ajax event="rowUnselect" listener="#{schoolControll.onRowUnselect}" />
+
+
+					<p:ajax event="rowEdit" listener="#{nclexAnnualDataController.onEdit}" update=":annualDataForm:msgs" />
+					<p:ajax event="rowEditCancel" listener="#{nclexAnnualDataController.onCancel}" update=":annualDataForm:msgs" />
+
+
+
+					<p:column headerText="RID" width="2%">
+						<h:outputText value="#{oVo.rid}" />
+					</p:column>
+
+					<p:column headerText="SCHOOL" width="10%">
+						<h:outputText value="#{oVo.schoolName}" style="width:100%" />
+					</p:column>
+ 
+ 					<p:column headerText="PROGRAM GROUP" width="10%">
+						<h:outputText value="#{oVo.groupName}" style="width:100%" />
+					</p:column>
+					
+					 
+										
+								
+					<p:column headerText="YEAR" width="3%">
+						<h:outputText value="#{oVo.year}" style="width:100%" />
+					</p:column>
+										
+						
+				
+					
+					<p:column width="7%">
+						<f:facet name="header">
+							<h:outputText value="NCLEX PASS %" style="width:100%" />
+						</f:facet>
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{oVo.nclexPassPercent}"  style="width:100%" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{oVo.nclexPassPercent}" style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+										
+					<p:column headerText="EDIT" width="3%">
+						<p:rowEditor />
+					</p:column>
+
+
+				</p:dataTable>
+
+
+			</h:form>
+
+			<!-- END EDITABLE TABLE -->
+
+
+
+		</p:layoutUnit>
+
+		<p:layoutUnit position="south" resizable="true" id="south" size="20%">
+			<center>
+
+
+				<p:panel header="SELECT SCHOOL" style="width: 100%; height: 100%;">
+					<h:form id="selectSchoolForm">
+
+
+
+						<h:panelGrid id="lognPanelGrid" columns="8" cellpadding="2">
+							
+							<p:commandButton value="REFRESH" update=":selectSchoolForm:selectedSchool" actionListener="#{nclexAnnualDataController.refresh()}" />
+
+
+							<!-- SELECT SCHOOL DROP-DOWN -->
+							<p:selectOneMenu id="selectedSchool" value="#{nclexAnnualDataController.selectedSchoolRid}">
+								<p:ajax event="change" listener="#{nclexAnnualDataController.onSchoolChangedEvent}"
+									update=":annualDataForm:schoolsAnnualDataTable,:selectSchoolForm:showDialogBtn,:addSchoolAnnualDataForm" process="selectSchoolForm" />
+
+								<f:selectItem itemLabel="No Selection" itemValue="" noSelectionOption="true" />
+								<f:selectItems value="#{nclexAnnualDataController.allSchoolsDtoList}" var="schoolDto" itemValue="#{schoolDto.rid}" itemLabel="#{schoolDto.name}" />
+
+							</p:selectOneMenu>
+
+							<!-- SHOW LIGHTBOX BUTTON -->
+							<p:commandButton id="showDialogBtn" value="ADD NCLEX ANNUAL DATA" type="button" onclick="PF('dlg').show();"
+								disabled="#{ nclexAnnualDataController.selectedSchoolRid eq null   or nclexAnnualDataController.selectedSchoolRid eq ''}" />
+
+
+
+
+						</h:panelGrid>
+
+
+					</h:form>
+
+
+
+
+				</p:panel>
+
+
+				<!-- LIGHTBOX -->
+				<p:dialog id="addDataDialog" iframe="false" header="ADD NCLEX ANNUAL DATA" modal="true" style="text-align: center;" widgetVar="dlg" closable="true" appendTo="@(body)"
+					showEffect="bounce" hideEffect="bounce" width="80%" height="90%" showHeader="true" dynamic="true">
+
+
+					<h:form id="addSchoolAnnualDataForm">
+
+
+						<p:growl id="growl" sticky="false" showDetail="true" life="1500" />
+
+
+
+
+						<p:panelGrid columns="2" header="ADD NCLEX ANNUAL DATA" style="width: 100%;">
+
+							<h:outputLabel for="schoolRid" value="SCHOOL RID:" style="text-align: right; display: block;" />
+							<h:outputText value="#{nclexAnnualDataController.newSchoolAnnualDataVo.schoolRid}" id="schoolRid" size="10" />
+
+
+
+							<h:outputLabel for="name" value="SCHOOL NAME:" style="text-align: right; display: block;" />
+							<h:outputText value="#{nclexAnnualDataController.newSchoolAnnualDataVo.schoolName}" id="schoolName" size="50" />
+														 
+							 
+							<h:outputLabel for="schoolAnnualData_selectedProgramGroup" value="PROGRAM GROUP:" style="text-align: right; display: block;" />
+							<p:selectOneMenu id="schoolAnnualData_selectedProgramGroup" value="#{nclexAnnualDataController.newSchoolAnnualDataVo.programGroupRid}" required="true">
+								<p:ajax event="change" listener="#{nclexAnnualDataController.onProgramGroupChangedEvent}"    />
+								<f:selectItem itemValue="-1" itemLabel="No Selection" noSelectionOption="false" />
+								<f:selectItems value="#{nclexAnnualDataController.getProgramGroupList()}" var="oDto" itemValue="#{oDto.rid}" itemLabel="#{oDto.groupName}" />
+								
+							</p:selectOneMenu>
+							
+														
+
+
+
+							<h:outputLabel for="selectYear" value="YEAR:" style="text-align: right; display: block;" />
+							<p:selectOneMenu id="selectYear" value="#{nclexAnnualDataController.newSchoolAnnualDataVo.year}" required="true">
+
+								<f:selectItem itemValue="" itemLabel="No Selection" noSelectionOption="true" />
+
+								<f:selectItems value="#{nclexAnnualDataController.yearsList}" var="oDto" itemValue="#{oDto.year}" itemLabel="#{oDto.year}" />
+							</p:selectOneMenu>
+
+
+
+
+
+							
+							
+							<h:outputLabel for="nclexPassPercent" value="NCLEX PASS %:" style="text-align: right; display: block;" />
+							<p:inputText id="nclexPassPercent" value="#{nclexAnnualDataController.newSchoolAnnualDataVo.nclexPassPercent}" style="width:10%" required="false" />
+							
+							
+							
+							<f:facet name="footer" >
+								<p:commandButton value="CLOSE" type="button" onclick="PF('dlg').hide()" />
+								<p:commandButton value="ADD" update=":annualDataForm,:addSchoolAnnualDataForm" actionListener="#{nclexAnnualDataController.addAction}" oncomplete="handleLoginRequest(xhr, status, args)" />
+							</f:facet>
+
+
+						</p:panelGrid>
+
+
+
+
+					</h:form>
+				</p:dialog>
+
+				<script type="text/javascript">
+					function handleLoginRequest(xhr, status, args) {
+						if (args.validationFailed || !args.validated) {
+							PF('dlg').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('dlg').hide();
+							
+						}
+					}
+				</script>
+
+
+
+			</center>
+		</p:layoutUnit>
+
+
+
+	</p:layout>
+
+
+
+
+
+
+</h:body>
+
+
+</html>
