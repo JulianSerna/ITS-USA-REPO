@@ -7,6 +7,7 @@
 	<h:head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>BOARD OF NURSING</title>
+		<link type="text/css" rel="stylesheet" href="../resources/css/default.css" />
 
 	</h:head>
 
@@ -14,13 +15,13 @@
 
 		<p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
 
-			<p:layoutUnit position="north" size="15%" id="north" >
+			<p:layoutUnit position="north" size="15%" id="northLayout" >
 				<ui:include src="header.xhtml" />
 			</p:layoutUnit>
 
 
 
-			<p:layoutUnit styleClass="layoutUnitCenter" position="center" size="85%">
+			<p:layoutUnit   position="center" size="85%" id="centerLayout">
 
 				<ui:include src="menuBar.xhtml" />
 
@@ -143,7 +144,7 @@
 			</p:layoutUnit>
 		</p:layout>
 
-		<p:layoutUnit position="south" resizable="true" id="south" size="0%">
+		<p:layoutUnit position="south" resizable="true" id="southLayout" size="0%" >
 			<!-- <ui:include src="/pages/editProgramsFooter.xhtml" /> -->
 		</p:layoutUnit>
 

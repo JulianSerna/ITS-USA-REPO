@@ -1,0 +1,42 @@
+body
+{
+	
+	background-image: url('../../resources/images/background.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+  	
+}
+
+
+
+
+.ui-layout-unit-content
+{
+	 background:rgba(0,0,0,0.0);
+}
+ui-widget-content
+{
+	background:rgba(0,0,0,0.0);
+}
+#northLayout
+{
+	opacity: .7;
+	background-color: transparent !important;
+	background:rgba(0,0,0,0.0);
+	
+}
+#header_panelGrid
+{
+	background-color: transparent !important;
+	background:rgba(0,0,0,0.0);
+}
+
+
+#centerLayout
+{
+	opacity: .9;
+}
+#southLayout
+{
+	opacity: .8;
+}

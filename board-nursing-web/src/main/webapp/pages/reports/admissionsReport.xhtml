@@ -5,29 +5,24 @@
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>BOARD OF NURSING</title>
-	<ui:debug />
-
-	<style type="text/css">
-		.ui-widget{font-size:90% !important;}
-	    .ui-layout-unit-content{background-image:url("/resources/images/background.jpg");}
-	</style>
+	<link type="text/css" rel="stylesheet" href="../../resources/css/default.css" />
 	
 	
 	</h:head>
 
-<h:body onload="statusDialog.hide();" background="resources/images/background.jpg" >
+<h:body onload="statusDialog.hide();" >
 
-	<p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF; background-image: url('resources/images/background.jpg');" >
+	<p:layout fullPage="true" resizeTitle="resize" >
 
 
 		<!-- NORTH LAYOUT -->
-		<p:layoutUnit position="north" size="15%" id="north">
+		<p:layoutUnit position="north" size="15%" id="northLayout" >
 			<ui:include src="/templates/header.xhtml" />
 		</p:layoutUnit>
 
 
 		<!-- CENTER LAYOUT -->
-		<p:layoutUnit styleClass="layoutUnitCenter" position="center" size="60%">
+		<p:layoutUnit position="center" size="60%" id="centerLayout">
 			<ui:include src="/templates/menuBar.xhtml" />
 
 			<!-- LIST OF SCHOOLS -->

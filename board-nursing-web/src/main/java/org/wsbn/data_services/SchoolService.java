@@ -13,6 +13,7 @@ import org.wsbn.dao.NclexAnnualDataDao;
 import org.wsbn.dao.ProgramGroupsDao;
 import org.wsbn.dao.ProgramsDao;
 import org.wsbn.dao.SchoolAnnualDataDao;
+import org.wsbn.dao.SchoolDetailsDao;
 import org.wsbn.dao.SchoolsDao;
 import org.wsbn.dao.SchoolsProgramsDao;
 import org.wsbn.dao.YearsDao;
@@ -21,9 +22,11 @@ import org.wsbn.dto.NclexAnnualDataDto;
 import org.wsbn.dto.ProgramDto;
 import org.wsbn.dto.ProgramGroupDto;
 import org.wsbn.dto.SchoolAnnualDataDto;
+import org.wsbn.dto.SchoolDetailsDto;
 import org.wsbn.dto.SchoolDto;
 import org.wsbn.dto.SchoolProgramDto;
 import org.wsbn.dto.YearDto;
+import org.wsbn.dto.reports.NclexAnnualDataReport;
 import org.wsbn.dto.reports.SchoolAnnualDataReport;
 import org.wsbn.dto.reports.SchoolAnnualDataReport.eData;
 
@@ -39,6 +42,7 @@ public class SchoolService implements Serializable
 	private SchoolsDao mSchoolsDao; 
 	private SchoolsProgramsDao mSchoolsProgramsDao;
 	private SchoolAnnualDataDao mSchoolAnnualDataDao;
+	private SchoolDetailsDao mSchoolDetailsDao;
 	private NclexAnnualDataDao mNclexAnnualDataDao;
 	private ProgramsDao mProgramsDao;
 	private YearsDao mYearsDao;
@@ -80,6 +84,7 @@ public class SchoolService implements Serializable
 			 if(this.mProgramsDao == null)  this.mProgramsDao = new ProgramsDao();
 			 if(this.mSchoolsProgramsDao == null) this.mSchoolsProgramsDao = new SchoolsProgramsDao();
 			 if(this.mSchoolAnnualDataDao == null) this.mSchoolAnnualDataDao = new SchoolAnnualDataDao();
+			 if(this.mSchoolDetailsDao == null) this.mSchoolDetailsDao = new SchoolDetailsDao();
 			 if(this.mNclexAnnualDataDao == null) this.mNclexAnnualDataDao = new NclexAnnualDataDao();
 			 if(this.mYearsDao == null) this.mYearsDao = new YearsDao();
 			 if(this.mDegreesDao == null) this.mDegreesDao = new DegreesDao();
@@ -124,6 +129,47 @@ public class SchoolService implements Serializable
 		return this.mSchoolAnnualDataDao.findBySchoolRid(schoolId);
 	}
 	
+	public SchoolDetailsDto getSchoolDetailsDto(Long schoolId, int year)
+	{
+		return this.mSchoolDetailsDao.findBySchoolRid(schoolId, year);
+	}
+	
+	public SchoolDetailsDto  addSchoolDetailsDto(SchoolDetailsDto pDto )
+	{
+		// response
+		SchoolDetailsDto oResponse;
+		
+		// save the school details dto
+		oResponse = this.mSchoolDetailsDao.addEntity(pDto);
+				
+		return oResponse;
+		
+	}
+	
+	public SchoolDetailsDto  updateSchoolDetailsDto(SchoolDetailsDto pDto)
+	{
+				
+		// response
+		SchoolDetailsDto oResponse;
+		
+		// save the school details dto
+		oResponse =  this.mSchoolDetailsDao.saveEntity(pDto);
+				
+		return oResponse;
+		
+	}
+	
+	
+	public List<NclexAnnualDataReport> getNclexAnnualDataByPnProgramGroup()
+	{
+		return this.mNclexAnnualDataDao.findByPnProgramGroup();
+	}
+	
+	public List<NclexAnnualDataReport> getNclexAnnualDataByAdnBsnProgramGroups()
+	{
+		return this.mNclexAnnualDataDao.findByAdnBsnProgramGroups();
+	}
+	
 	public List<SchoolAnnualDataReport> getSchoolAnnualDataByPnProgramGroup(eData pValue)
 	{
 		return this.mSchoolAnnualDataDao.findByPnProgramGroup(pValue);
@@ -133,6 +179,7 @@ public class SchoolService implements Serializable
 	{
 		return this.mSchoolAnnualDataDao.findByAdnBsnProgramGroups(pValue);
 	}
+	
 	
 	public List<SchoolAnnualDataReport> getSchoolAnnualDataByGraduatePrograms(eData pValue)
 	{

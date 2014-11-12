@@ -1,6 +1,7 @@
 package org.wsbn.controllers;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -335,11 +336,13 @@ public class NclexAnnualDataController implements iController, Serializable
 		
 		if(mNewNclexAnnualDataVo.getNclexPassPercent() == null  || mNewNclexAnnualDataVo.getNclexPassPercent() == "") 
 		{
-			oNewAnnualDataDto.setNclexPassPercent(0.0);
+			oNewAnnualDataDto.setNclexPassPercent(new BigDecimal(0.0));
 		}
 		else
 		{
-			oNewAnnualDataDto.setNclexPassPercent(Double.valueOf(this.mNewNclexAnnualDataVo.getNclexPassPercent()));
+			double dTmpValue = Double.parseDouble(this.mNewNclexAnnualDataVo.getNclexPassPercent());
+			oNewAnnualDataDto.setNclexPassPercent(BigDecimal.valueOf(dTmpValue));
+					 
 		}
 		
 			
@@ -440,11 +443,12 @@ public class NclexAnnualDataController implements iController, Serializable
 									
 			if(oEditVo.getNclexPassPercent() == null || oEditVo.getNclexPassPercent() == "")
 			{
-				oEditDto.setNclexPassPercent(0.0);
+				oEditDto.setNclexPassPercent(new BigDecimal(0.0));
 			}
 			else
 			{
-				oEditDto.setNclexPassPercent(Double.valueOf(oEditVo.getNclexPassPercent()));
+				double dTmpValue = Double.parseDouble(oEditVo.getNclexPassPercent());
+				oEditDto.setNclexPassPercent(BigDecimal.valueOf(dTmpValue));
 			}
 			
 			

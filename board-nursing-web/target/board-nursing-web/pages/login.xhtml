@@ -17,9 +17,9 @@
         <h:form id="loginPage" prependId="false">
             <h:panelGrid  id="lognPanelGrid" columns="2" cellpadding="2" >
                 <h:outputLabel for="userName" value="User Name"/>
-                <h:inputText id="userName" value="#{userController.userDto.name}" label="UserName"></h:inputText>
+                <h:inputText id="userName" value="#{userController.userDto.name}" label="UserName"   required="true"></h:inputText>
                 <h:outputLabel for="userPassword" value="Password"/>
-                <h:inputSecret id="userPassword" value="#{userController.userDto.password}"></h:inputSecret>
+                <h:inputSecret id="userPassword" value="#{userController.userDto.password}" required="true"></h:inputSecret>
         
             </h:panelGrid>
             

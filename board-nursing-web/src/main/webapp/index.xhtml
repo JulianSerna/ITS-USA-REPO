@@ -3,15 +3,37 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
-	template="templates/template.xhtml">
-	
-	
+	template="/templates/template.xhtml">
+
+
 	<ui:define name="metadata">
+
 	</ui:define>
-	
+
 	
 	<ui:define name="content">
-		Hello world! Welcome to a page derived from a template 
+	<center>
+    <p:panel header="Login Form" style="width: 350;" >
+        <h:form id="loginPage" prependId="false">
+            <h:panelGrid  id="lognPanelGrid" columns="2" cellpadding="2" >
+                <h:outputLabel for="userName" value="User Name"/>
+                <h:inputText id="userName" value="#{userController.userDto.name}" label="UserName"></h:inputText>
+                <h:outputLabel for="userPassword" value="Password"/>
+                <h:inputSecret id="userPassword" value="#{userController.userDto.password}"></h:inputSecret>
+        
+            </h:panelGrid>
+            
+            <h:commandButton id="loginPageSubmitBtn" type="submit" value="Login" action="#{userController.login}"></h:commandButton>
+            <p:messages autoUpdate="true" id="msgs" showDetail="true" showSummary="true" />
+            
+        </h:form>
+    </p:panel>
+    
+    </center>
+		
+			
+
+		
 	</ui:define>
 
 

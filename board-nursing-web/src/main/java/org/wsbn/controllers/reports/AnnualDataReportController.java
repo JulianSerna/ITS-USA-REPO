@@ -13,10 +13,11 @@ import org.wsbn.dto.DegreeDto;
 import org.wsbn.dto.ProgramDto;
 import org.wsbn.dto.SchoolDto;
 import org.wsbn.dto.YearDto;
+import org.wsbn.dto.reports.NclexAnnualDataReport;
 import org.wsbn.dto.reports.SchoolAnnualDataReport;
 import org.wsbn.dto.reports.SchoolAnnualDataReport.eData;
 import org.wsbn.vo.DegreeVo;
-import org.wsbn.vo.reports.ProgramAdmissionVo;
+import org.wsbn.vo.reports.AnnualDataVo;
 
 @ManagedBean
 @ViewScoped
@@ -46,8 +47,8 @@ public class AnnualDataReportController implements Serializable
 	// lists
 	private List<YearDto> mYearsList;
 	private List<SchoolDto>		mAllSchoolsList;
-	private List<ProgramAdmissionVo>		mProgramAdmissionVoList;
-	private List<ProgramAdmissionVo>		mRnProgramAdmissionVoList;
+	private List<AnnualDataVo>		mProgramAdmissionVoList;
+	private List<AnnualDataVo>		mRnProgramAdmissionVoList;
 	private List<ProgramDto>	mAllProgramsDtoList;
 	private List<ProgramDto>    mSchoolProgramsList;
 	private List<DegreeVo> mDegreeVoList;
@@ -104,6 +105,14 @@ public class AnnualDataReportController implements Serializable
 				oSchoolAnnualDataDtoList = this.schoolService.getSchoolAnnualDataByGraduatePrograms(eData.GRADUATIONS);
 				this.mRnProgramAdmissionVoList = this.buildSchoolsAnnualDataList(oSchoolAnnualDataDtoList);
 			}
+			else if(pReportType.equalsIgnoreCase(eData.NCLEX.toString() ))
+			{
+				List<NclexAnnualDataReport> oSchoolAnnualDataDtoList = this.schoolService.getNclexAnnualDataByPnProgramGroup();
+				this.mProgramAdmissionVoList = this.buildNclexAnnualDataList(oSchoolAnnualDataDtoList);
+				oSchoolAnnualDataDtoList = this.schoolService.getNclexAnnualDataByAdnBsnProgramGroups();
+				this.mRnProgramAdmissionVoList = this.buildNclexAnnualDataList(oSchoolAnnualDataDtoList);
+			}
+			
 			
 			
 			
@@ -140,7 +149,7 @@ public class AnnualDataReportController implements Serializable
 	
 	
 	
-	private List<ProgramAdmissionVo>buildSchoolsAnnualDataList(List<SchoolAnnualDataReport> pDtoList)
+	private List<AnnualDataVo>buildSchoolsAnnualDataList(List<SchoolAnnualDataReport> pDtoList)
 	{
 		// validate arguments
 		if(pDtoList == null || pDtoList.size() < 1) return null;
@@ -156,14 +165,14 @@ public class AnnualDataReportController implements Serializable
 		int Y2015= 0;
 		
 		
-		List<ProgramAdmissionVo> oResponse = new ArrayList<ProgramAdmissionVo>();
+		List<AnnualDataVo> oResponse = new ArrayList<AnnualDataVo>();
 		
 		
 		// for every school annual data dto in the list
 		for(SchoolAnnualDataReport oSchoolAnnualDataDto : pDtoList )
 		{
 			// convert it into a value object
-			ProgramAdmissionVo oVo = oSchoolAnnualDataDto.getVo();
+			AnnualDataVo oVo = oSchoolAnnualDataDto.getVo();
 			
 			// add vo school name
 			for(SchoolDto schoolDto: this.mAllSchoolsList)
@@ -208,10 +217,11 @@ public class AnnualDataReportController implements Serializable
 			
 			// add the vo to the response
 			oResponse.add(oVo);
+			
 					
 		}
-		
-		ProgramAdmissionVo oNewVo = new ProgramAdmissionVo();
+		 
+		AnnualDataVo oNewVo = new AnnualDataVo();
 		oNewVo.setSchoolRid("-1");
 		oNewVo.setSchoolName("   ");
 		oNewVo.setProgramName("         TOTALS:");
@@ -226,18 +236,79 @@ public class AnnualDataReportController implements Serializable
 		oNewVo.setY2015(String.valueOf(Y2015));
 		
 		oResponse.add(oNewVo);
+	 
+		
+		return oResponse;
+	}
+	
+	private List<AnnualDataVo>buildNclexAnnualDataList(List<NclexAnnualDataReport> pDtoList)
+	{
+		// validate arguments
+		if(pDtoList == null || pDtoList.size() < 1) return null;
+		
+		 
+		
+		
+		List<AnnualDataVo> oResponse = new ArrayList<AnnualDataVo>();
+		
+		
+		// for every school annual data dto in the list
+		for(NclexAnnualDataReport oNclexAnnualDataDto : pDtoList )
+		{
+			// convert it into a value object
+			AnnualDataVo oVo = oNclexAnnualDataDto.getVo();
+			
+			// add vo school name
+			for(SchoolDto schoolDto: this.mAllSchoolsList)
+			{
+				if(  schoolDto.getRid().equals(Long.parseLong(oVo.getSchoolRid())))
+				{
+					oVo.setSchoolName(schoolDto.getName());
+					break;
+				}
+			}
+			
+			// add vo program name
+			for(ProgramDto oProgramDto : this.mAllProgramsDtoList)
+			{
+				if(oProgramDto.getRid() == Long.parseLong(oVo.getProgramRid()))
+				{
+					oVo.setProgramName(oProgramDto.getName());
+					break;
+				}
+			}
+			
+			// add vo degree name
+			for(DegreeVo oDegreeVo : this.mDegreeVoList)
+			{
+				if(oDegreeVo.getRid().equalsIgnoreCase(oVo.getDegreeRid()))
+				{
+					oVo.setDegreeName(oDegreeVo.getName());
+					break;
+				}
+			}
+			
+			 
+			
+			
+			// add the vo to the response
+			oResponse.add(oVo);
+			
+					
+		}
+		
 		
 		
 		return oResponse;
 	}
 	
-	public List<ProgramAdmissionVo> getSchoolsAnnualDataVoList()
+	public List<AnnualDataVo> getSchoolsAnnualDataVoList()
 	{
 		return this.mProgramAdmissionVoList;
 
 	}
 	
-	public List<ProgramAdmissionVo> getRcSchoolsAnnualDataVoList()
+	public List<AnnualDataVo> getRcSchoolsAnnualDataVoList()
 	{
 		return this.mRnProgramAdmissionVoList;
 

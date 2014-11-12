@@ -5,22 +5,22 @@
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>BOARD OF NURSING</title>
-	<ui:debug />
+	 <link type="text/css" rel="stylesheet" href="../../resources/css/default.css" />
 </h:head>
 
 <h:body onload="statusDialog.hide();">
 
-	<p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
+	<p:layout fullPage="true" resizeTitle="resize"  >
 
 
 		<!-- NORTH LAYOUT -->
-		<p:layoutUnit position="north" size="15%" id="north">
+		<p:layoutUnit position="north" size="15%" id="northLayout"  >
 			<ui:include src="/templates/header.xhtml" />
 		</p:layoutUnit>
 
 
 		<!-- CENTER LAYOUT -->
-		<p:layoutUnit styleClass="layoutUnitCenter" position="center" size="60%">
+		<p:layoutUnit position="center" size="60%" id="centerLayout">
 			<ui:include src="/templates/menuBar.xhtml" />
 
 			<!-- LIST OF SCHOOLS -->

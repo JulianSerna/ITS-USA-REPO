@@ -4,6 +4,7 @@ org\wsbn\dto\SchoolAnnualDataDto.class
 org\wsbn\controllers\reports\AnnualDataReportController.class
 org\wsbn\controllers\iController.class
 org\wsbn\dto\iDto.class
+org\wsbn\vo\reports\AnnualDataVo.class
 org\wsbn\controllers\ProgramController.class
 org\wsbn\dao\Dao.class
 org\wsbn\business\UserManager.class
@@ -15,6 +16,7 @@ org\wsbn\dao\UserManager.class
 org\wsbn\vo\SchoolAnnualDataVo.class
 org\wsbn\utils\InventoryItem.class
 org\wsbn\dto\ProgramDto.class
+org\wsbn\controllers\SchoolDetailsController.class
 org\wsbn\controllers\UserLoginView.class
 org\wsbn\dao\SchoolAnnualDataDao.class
 org\wsbn\data_services\SchoolService.class
@@ -22,9 +24,10 @@ org\wsbn\persistence\PersistenceManager.class
 org\wsbn\dto\DegreeDto.class
 org\wsbn\vo\SchoolVo.class
 org\wsbn\dao\NclexAnnualDataDao.class
-org\wsbn\vo\reports\ProgramAdmissionVo.class
 org\wsbn\bootstrap\Main.class
 org\wsbn\vo\DegreeVo.class
+org\wsbn\dto\SchoolDetailsDto.class
+org\wsbn\vo\SchoolDetailsVo.class
 org\wsbn\vo\Sale.class
 org\wsbn\dto\ProgramGroupDto.class
 org\wsbn\controllers\NclexAnnualDataController.class
@@ -41,12 +44,15 @@ org\wsbn\dto\reports\SchoolAnnualDataReport$eData.class
 org\wsbn\dao\ProgramsDao.class
 org\wsbn\controllers\SchoolAnnualDataController.class
 org\wsbn\vo\NclexAnnualDataVo.class
+org\wsbn\dao\SchoolDetailsDao.class
 org\wsbn\dto\SchoolProgramKey.class
 org\wsbn\servlets\EmfServlet.class
 org\wsbn\data_services\ProgramServices.class
 org\wsbn\utils\InventoryVendorList.class
 org\wsbn\dto\SchoolDto.class
 org\wsbn\controllers\reports\GroupViewController.class
+org\wsbn\dto\reports\NclexAnnualDataReport$eData.class
 org\wsbn\dao\YearsDao.class
 org\wsbn\vo\Player.class
 org\wsbn\dto\YearDto.class
+org\wsbn\dto\reports\NclexAnnualDataReport.class

@@ -1,6 +1,7 @@
 package org.wsbn.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,7 +37,7 @@ public class NclexAnnualDataDto implements Serializable
 	
 	
 	@Column(name = "NCLEX_PASS_PERCENT")
-	private Double nclexPassPercent;
+	private BigDecimal nclexPassPercent;
 
 	
 	
@@ -47,7 +48,7 @@ public class NclexAnnualDataDto implements Serializable
 	}
 	public NclexAnnualDataDto(Long pRid) {
 		this.rid = pRid;
-		this.nclexPassPercent = (double) 0;
+		this.nclexPassPercent = new BigDecimal(0);
 	}
 
 	/**
@@ -115,14 +116,14 @@ public class NclexAnnualDataDto implements Serializable
 	/**
 	 * @return the nclexPassPercent
 	 */
-	public Double getNclexPassPercent()
+	public BigDecimal getNclexPassPercent()
 	{
 		return nclexPassPercent;
 	}
 	/**
 	 * @param nclexPassPercent the nclexPassPercent to set
 	 */
-	public void setNclexPassPercent(Double nclexPassPercent)
+	public void setNclexPassPercent(BigDecimal nclexPassPercent)
 	{
 		this.nclexPassPercent = nclexPassPercent;
 	}

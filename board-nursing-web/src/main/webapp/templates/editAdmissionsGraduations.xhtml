@@ -5,7 +5,7 @@
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>BOARD OF NURSING</title>
-	<ui:debug />
+	<link type="text/css" rel="stylesheet" href="../resources/css/default.css" />
 </h:head>
 
 <h:body onload="statusDialog.hide();">
@@ -14,18 +14,13 @@
 
 
 		<!-- NORTH LAYOUT -->
-		<p:layoutUnit position="north" size="15%" id="north">
+		<p:layoutUnit position="north" size="15%" id="northLayout"  >
 			<ui:include src="header.xhtml" />
 		</p:layoutUnit>
 
 
-		<!-- WEST LAYOUT 
-			<p:layoutUnit position="west" size="15%" id="west-layout" collapsible="true" header="ADD RECORD" collapsed="true">
-				<ui:include src="/pages/addSchoolAnnualData.xhtml" />
-			</p:layoutUnit>
-			-->
 		<!-- CENTER LAYOUT -->
-		<p:layoutUnit styleClass="layoutUnitCenter" position="center" size="60%">
+		<p:layoutUnit position="center" size="60%" id="centerLayout">
 			<ui:include src="menuBar.xhtml" />
 
 			<!-- LIST OF SCHOOLS -->
@@ -178,7 +173,7 @@
 
 		</p:layoutUnit>
 
-		<p:layoutUnit position="south" resizable="true" id="south" size="20%">
+		<p:layoutUnit position="south" resizable="true" id="southLayout" size="20%" >
 			<center>
 
 

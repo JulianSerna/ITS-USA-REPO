@@ -2,7 +2,7 @@ package org.wsbn.dto.reports;
 
 import java.io.Serializable;
 
-import org.wsbn.vo.reports.ProgramAdmissionVo;
+import org.wsbn.vo.reports.AnnualDataVo;
 
  
 public class SchoolAnnualDataReport implements Serializable
@@ -10,7 +10,7 @@ public class SchoolAnnualDataReport implements Serializable
 
 	private static final long	serialVersionUID	= 1L;
 	
-	public enum eData {ADMISSIONS, GRADUATIONS, GRADUATE};
+	public enum eData {ADMISSIONS, GRADUATIONS, GRADUATE, NCLEX};
 	
 	// STATE
  
@@ -274,9 +274,9 @@ public class SchoolAnnualDataReport implements Serializable
 	
 	
 	// ============================ METHODS =====================================
-	public ProgramAdmissionVo getVo()
+	public AnnualDataVo getVo()
 	{
-		ProgramAdmissionVo oVo = new ProgramAdmissionVo();
+		AnnualDataVo oVo = new AnnualDataVo();
 		oVo.setSchoolRid(this.schoolRid.toString());
 		oVo.setProgramRid(this.programRid.toString());
 		oVo.setDegreeRid(this.degreeRid.toString());

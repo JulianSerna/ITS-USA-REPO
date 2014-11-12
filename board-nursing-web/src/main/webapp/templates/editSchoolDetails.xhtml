@@ -1,0 +1,235 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<h:head>
+
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>BOARD OF NURSING</title>
+	
+	<link type="text/css" rel="stylesheet" href="../resources/css/default.css" />
+	 
+	
+	 
+	
+	
+	
+</h:head>
+
+<h:body onload="statusDialog.hide();">
+
+	<p:layout id="pageLayout"  fullPage="true" resizeTitle="resize"  >
+
+
+		<!-- NORTH LAYOUT -->
+		<p:layoutUnit position="north" size="15%" id="northLayout" >
+			<ui:include src="header.xhtml"  />
+		</p:layoutUnit>
+
+
+		<!-- CENTER LAYOUT -->
+		<p:layoutUnit   position="center" size="60%" id="centerLayout"  >
+			<ui:include src="menuBar.xhtml" />
+
+			<!-- LIST OF SCHOOLS -->
+
+			<h:form id="schoolDetailsForm" >
+
+				<p:growl id="msgs" showDetail="true" />
+
+				<f:event type="preRenderView" listener="#{schoolDetailsController.init}" />
+
+
+				<!-- TABLE -->
+				<p:panelGrid style="margin-top:20px">
+					<f:facet name="header">
+						<p:row>
+							<p:column colspan="6" >#{schoolDetailsController.selectedSchoolDto.name}</p:column>
+						</p:row>
+					</f:facet>
+
+					<p:row>
+						<p:column rowspan="2" width="5%">Reginal Accreditation:</p:column>
+						<p:column rowspan="2">
+							<p:inputTextarea rows="3" cols="40" maxlength="120" autoResize="false" 
+							value="#{schoolDetailsController.selectedShoolDetailsVo.regionalAccreditation}" disabled="#{ schoolDetailsController.displayUpdate()}" />
+						</p:column>
+
+						<p:column >Most Recent Accreditation:</p:column>
+						<p:column ><p:inputText value="#{schoolDetailsController.selectedShoolDetailsVo.mostRecentAccreditation}" disabled="#{ schoolDetailsController.displayUpdate()}"/></p:column>
+
+						<p:column rowspan="2">Approval Type:</p:column>
+						<p:column rowspan="2">
+							<p:inputTextarea rows="3" cols="40" maxlength="120" autoResize="false" value="#{schoolDetailsController.selectedShoolDetailsVo.approvalType}" 
+								disabled="#{ schoolDetailsController.displayUpdate()}" />
+						</p:column>
+				
+					</p:row>
+
+					<p:row>
+						<p:column>Next Visit:</p:column>
+						<p:column ><p:inputText  value="#{schoolDetailsController.selectedShoolDetailsVo.nextVisit}" disabled="#{ schoolDetailsController.displayUpdate()}" /></p:column>
+					</p:row>
+										
+					<p:row>
+						<p:column width="5%">Date of Most Recent NLNAC/CCNE Accreditation:</p:column>
+						<p:column ><p:inputText value="#{schoolDetailsController.selectedShoolDetailsVo.mostRecentNlnacAccreditation}" disabled="#{ schoolDetailsController.displayUpdate()}" /></p:column>
+						
+						<p:column >Approval Type:</p:column>
+						<p:column ><p:inputTextarea rows="3" cols="40" maxlength="120" autoResize="false" value="#{schoolDetailsController.selectedShoolDetailsVo.nlnacApprovalTpe}" 
+							disabled="#{ schoolDetailsController.displayUpdate()}" /></p:column>
+						
+						<p:column >Next Visit:</p:column>
+						<p:column ><p:inputTextarea rows="3" cols="40" maxlength="120" autoResize="false" value="#{schoolDetailsController.selectedShoolDetailsVo.nlnacNextVisit}" 
+							disabled="#{ schoolDetailsController.displayUpdate()}" /></p:column>
+					
+					</p:row>
+					
+					
+					<p:row>
+						<p:column width="5%">Progress correcting deficiencies and recommendations cited by (NLNAC) ACEN/CCNE at last visit:</p:column>
+						<p:column ><p:inputTextarea rows="3" cols="40" maxlength="120" autoResize="false" value="#{schoolDetailsController.selectedShoolDetailsVo.nlnacLastVisitRecommendations1}"
+							disabled="#{ schoolDetailsController.displayUpdate()}" /></p:column>
+						<p:column ><p:inputTextarea rows="3" cols="40" maxlength="120" autoResize="false" value="#{schoolDetailsController.selectedShoolDetailsVo.nlnacLastVisitRecommendations2}" 
+							disabled="#{ schoolDetailsController.displayUpdate()}"/></p:column>
+						<p:column ><p:inputTextarea rows="3" cols="40" maxlength="120" autoResize="false" value="#{schoolDetailsController.selectedShoolDetailsVo.nlnacLastVisitRecommendations3}" 
+							disabled="#{ schoolDetailsController.displayUpdate()}"/></p:column>
+						<p:column >
+							<p:inputTextarea rows="3" cols="40" maxlength="120" autoResize="false" 
+							value="#{schoolDetailsController.selectedShoolDetailsVo.nlnacLastVisitRecommendations4}" disabled="#{ schoolDetailsController.displayUpdate()}" />
+							</p:column>
+						<p:column ><p:inputTextarea rows="3" cols="40" maxlength="120" autoResize="false" 
+							value="#{schoolDetailsController.selectedShoolDetailsVo.nlnacLastVisitRecommendations5}" disabled="#{ schoolDetailsController.displayUpdate()}" /></p:column>
+						
+					</p:row>
+					
+					
+					<p:row>
+						<p:column width="5%">Progress correcting deficiencies and recommendations cited by WSBN at last visit in:[expression]</p:column>
+						<p:column ><p:inputTextarea rows="3" cols="40" maxlength="120" autoResize="false" 
+							value="#{schoolDetailsController.selectedShoolDetailsVo.wsbnLastVisitRecommendations1}" disabled="#{ schoolDetailsController.displayUpdate()}" /></p:column>
+						<p:column ><p:inputTextarea rows="3" cols="40" maxlength="120" autoResize="false" 
+							value="#{schoolDetailsController.selectedShoolDetailsVo.wsbnLastVisitRecommendations2}" disabled="#{ schoolDetailsController.displayUpdate()}" /></p:column>
+						<p:column ><p:inputTextarea rows="3" cols="40" maxlength="120" autoResize="false" 
+							value="#{schoolDetailsController.selectedShoolDetailsVo.wsbnLastVisitRecommendations3}" disabled="#{ schoolDetailsController.displayUpdate()}" /></p:column>
+						<p:column ><p:inputTextarea rows="3" cols="40" maxlength="120" autoResize="false" 
+							value="#{schoolDetailsController.selectedShoolDetailsVo.wsbnLastVisitRecommendations4}" disabled="#{ schoolDetailsController.displayUpdate()}" /></p:column>
+						<p:column ><p:inputTextarea rows="3" cols="40" maxlength="120" autoResize="false" value="#{schoolDetailsController.selectedShoolDetailsVo.wsbnLastVisitRecommendations5}"
+							disabled="#{ schoolDetailsController.displayUpdate()}" /></p:column>
+						
+					</p:row>
+					
+					<p:row>
+						<p:column width="5%">NCLEX pass rate (ADN):</p:column>
+						<p:column ><p:inputTextarea rows="3" cols="40" maxlength="120" autoResize="false" 
+							value="#{schoolDetailsController.selectedShoolDetailsVo.nclexPassRate}" disabled="#{ schoolDetailsController.displayUpdate()}" /></p:column>
+						<p:column ></p:column>
+						<p:column ></p:column>
+						<p:column >Substancial Changes to Nursing Education Program:</p:column>
+						<p:column ><p:inputTextarea rows="3" cols="40" maxlength="120" autoResize="false" 
+							value="#{schoolDetailsController.selectedShoolDetailsVo.nursingProgramChanges}" disabled="#{ schoolDetailsController.displayUpdate()}" /></p:column>
+						
+					</p:row>
+					
+					<p:row>
+						<p:column width="5%">Administrator Qualifications:</p:column>
+						<p:column ><p:inputTextarea rows="3" cols="40" maxlength="120" autoResize="false" 
+							value="#{schoolDetailsController.selectedShoolDetailsVo.administrationQualifications}" disabled="#{ schoolDetailsController.displayUpdate()}" /></p:column>
+						<p:column >FQS:</p:column>
+						<p:column ><p:inputTextarea rows="3" cols="40" maxlength="120" autoResize="false" 
+							value="#{schoolDetailsController.selectedShoolDetailsVo.fqs}" disabled="#{ schoolDetailsController.displayUpdate()}" /></p:column>
+						<p:column >Faculty:</p:column>
+						<p:column ><p:inputTextarea rows="3" cols="40" maxlength="120" autoResize="false" 
+							value="#{schoolDetailsController.selectedShoolDetailsVo.faculty}" disabled="#{ schoolDetailsController.displayUpdate()}" /></p:column>
+						
+					</p:row>
+
+					<f:facet name="footer" align="center">
+						<p:row>
+							<p:column colspan="6" align="center">
+							
+								<p:commandButton id="updateBtn" value="UPDATE" update=":schoolDetailsForm" actionListener="#{schoolDetailsController.updateAction}" 
+									disabled="#{ schoolDetailsController.displayUpdate()}"   />
+							
+							
+							</p:column>
+						</p:row>
+					</f:facet>
+					
+				</p:panelGrid>
+				<!-- END EDITABLE TABLE -->
+				
+				
+
+
+			</h:form>
+
+			
+
+		</p:layoutUnit>
+
+		<p:layoutUnit position="south" resizable="true" id="southLayout" size="20%" >
+			<center>
+
+
+				<p:panel header="SELECT SCHOOL" style="width: 100%; height: 100%;">
+					<h:form id="selectSchoolForm">
+
+
+
+						<h:panelGrid id="lognPanelGrid" columns="8" cellpadding="2">
+
+														
+							<!-- SELECT YEAR DROP-DOWN -->
+							<p:selectOneMenu id="selectedYear" value="#{schoolDetailsController.selectedYearRid}">
+								<p:ajax event="change" listener="#{schoolDetailsController.onYearChangedEvent}" 
+									update=":schoolDetailsForm,:schoolDetailsForm:updateBtn"      />
+								<f:selectItem itemLabel="No Selection" itemValue="" noSelectionOption="true" />
+								<f:selectItems value="#{schoolDetailsController.yearDtoList}" var="oDto" itemValue="#{oDto.year}" itemLabel="#{oDto.year}" />
+
+							</p:selectOneMenu>
+							
+
+							<!-- SELECT SCHOOL DROP-DOWN -->
+							<p:selectOneMenu id="selectedSchool" value="#{schoolDetailsController.selectedSchoolRid}">
+								<p:ajax event="change" listener="#{schoolDetailsController.onSchoolChangedEvent}" update=":schoolDetailsForm,:schoolDetailsForm:updateBtn" />
+
+								<f:selectItem itemLabel="No Selection" itemValue="" noSelectionOption="true" />
+								<f:selectItems value="#{schoolDetailsController.allSchoolsDtoList}" var="schoolDto" itemValue="#{schoolDto.rid}" itemLabel="#{schoolDto.name}" />
+
+							</p:selectOneMenu>
+
+
+
+
+						</h:panelGrid>
+
+
+					</h:form>
+
+
+
+
+				</p:panel>
+
+
+
+
+
+			</center>
+		</p:layoutUnit>
+
+
+
+	</p:layout>
+
+
+
+
+
+
+</h:body>
+
+
+</html>

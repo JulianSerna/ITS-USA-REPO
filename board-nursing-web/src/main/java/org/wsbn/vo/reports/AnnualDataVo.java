@@ -3,7 +3,7 @@ package org.wsbn.vo.reports;
 import java.io.Serializable;
 
 
-public class ProgramAdmissionVo implements Serializable
+public class AnnualDataVo implements Serializable
 {
 
 	private static final long	serialVersionUID	= 1L;
@@ -48,7 +48,7 @@ public class ProgramAdmissionVo implements Serializable
 		
 	
 	// CONSTRUCTOR(S)
-	public ProgramAdmissionVo() 
+	public AnnualDataVo() 
 	{
 		
 	}
